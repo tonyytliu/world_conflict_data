@@ -1,5 +1,10 @@
 # Interactive component
 
+## Link to the interactive plot
+
+Click [here](https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1/) or copy the url: https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1/
+
+## Descriptions
 This is the interactive part of our conflict anaylsis. 
 We store the data in the github repo (https://github.com/sunyiyangallan/Conflict-Map), the cleaned up that file and get df_d3.csv using R (as mentioned in the previous chapters).
 

@@ -78,7 +78,10 @@
 <li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> 2. Relation between conflict and time</a></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#patterns-between-geographical-location-and-type-of-violence"><i class="fa fa-check"></i><b>5.3</b> Patterns between geographical location and type of violence</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
+<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a><ul>
+<li class="chapter" data-level="6.1" data-path="interactive-component.html"><a href="interactive-component.html#link-to-the-interactive-plot"><i class="fa fa-check"></i><b>6.1</b> Link to the interactive plot</a></li>
+<li class="chapter" data-level="6.2" data-path="interactive-component.html"><a href="interactive-component.html#descriptions"><i class="fa fa-check"></i><b>6.2</b> Descriptions</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -124,13 +127,13 @@
 ##                 0                 0                 0                 0 
 ##    deaths_unknown               low          geometry 
 ##                 0                 0                 0</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" />
-<img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/docs/_main_files/figure-html/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" />
+<img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/docs/_main_files/figure-html/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>There are only 2 variables that contains a lot of missing variables, gwnob and gwnoa. gwnoa is The Gleditsch and Ward number for Side A if the side is a state. If side A is not a state, then gwnoa will be missing. Similarly, gwnob is The Gleditsch and Ward number for Side B. It will be missing if side B is not a state. The reason why gwnob has more missing values is that in one-sided violence, side B will be recorded as “civilians” in this dataset, which is definitely not a state.
 Meanwhile, there are 152616 rows in the dataset. The number of missing values in gwnob column is 151812. gwnob of most rows are missing.</p>
 <p>However, for row patterns, we already know that, in each row, if side A is not a state, gwnoa will be missing and if side B is not a state, gwnob will be missing.
-<img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" />
-<img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" />
+<img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/docs/_main_files/figure-html/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" />
+<img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/docs/_main_files/figure-html/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" />
 From the graph, we can see that most rows has at least one missing value, which correspondes to our analysis for column patterns that gwnob of most rows are missing.</p>
 <p>As mentioned in chapter 2 “Data sources,” we are most interested in certain sets of variables, gwnoa and gwnob are not considered as “very important” in our project. Therefore, we would not worried much about missing gwnoa and gwnob values in the dataset. There are no missing values for the variables we are most interested in, which are described in chapter 2.</p>
 
