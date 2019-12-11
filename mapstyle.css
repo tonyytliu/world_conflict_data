@@ -1,0 +1,86 @@
+svg#svg2 {
+  display: block;
+  margin: 0 auto;
+}
+svg {
+  display: block;
+  margin: 0 auto;
+}
+
+body {
+  background-color: #1a2238;
+  fill-opacity: 1;
+}
+
+.water {
+  fill: #1a2238;
+  fill-opacity: 1;
+}
+
+.land {
+  fill: #253344;
+  stroke: #527299;
+  stroke-width: 0.55px;
+  fill-opacity: 1;
+}
+
+.land:hover {
+  fill: #3a506b;
+}
+
+.focused {
+  fill: #87bcde;
+}
+
+select {
+  position: absolute;
+  top: 20px;
+  left: 10%;
+  border: solid #ccc 1px;
+  padding: 3px;
+  box-shadow: inset 1px 1px 2px #ddd8dc;
+  width: 200px;
+}
+
+.countryTooltip {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+  background: #fff;
+  padding: 5px;
+  text-align: left;
+  border: solid #ccc 1px;
+  color: #666;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+
+path {
+  stroke: steelblue;
+  stroke-width: 2;
+  fill: none;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: grey;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+text {
+  fill: white;
+  font-family: sans-serif;
+}
+
+#time-line {
+  position: absolute;
+  z-index: 9999;
+  left: 10%;
+  top: 40px;
+  font-family: 'arial';
+}
+
+input#year {
+  border: 1px solid #ccc;
+}
