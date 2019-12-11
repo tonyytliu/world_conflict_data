@@ -1,7 +1,7 @@
 # Missing values
 
 
-There are 152616 rows in the dataset, and the following outputs are the number of rows missing for the specific variable. We do not need to know the detailed explanations of each variable at the current stage, the descriptions of certain variables are included in the previous Section III. For the full explanations of each variable, please refer to the [codebook](https://ucdp.uu.se/downloads/ged/ged191.pdf).
+There are 152616 rows in the dataset, and the following outputs are the number of rows missing for the specific variable. We do not need to know the detailed explanations of each variable at the current stage, the descriptions of certain variables are included in the previous chapter 2. For the full explanations of each variable, please refer to the [codebook](https://ucdp.uu.se/downloads/ged/ged191.pdf).
 
 ```{r}
 load(here("data", "raw", "ged191.RData"))
@@ -35,4 +35,4 @@ visna(ged191,sort='r')
 ```
 From the graph, we can see that most rows has at least one missing value, which correspondes to our analysis for column patterns that gwnob of most rows are missing. 
 
-As mentioned in Section III "Data transformation," we are most interested in certain sets of variables, gwnoa and gwnob are not considered as "very important" in our project. Therefore, we would not worried much about missing gwnoa and gwnob values in the dataset. There are no missing values for the variables we are most interested in, which are described in Section III "Data transformation." 
+As mentioned in chapter 2 "Data sources," we are most interested in certain sets of variables, gwnoa and gwnob are not considered as "very important" in our project. Therefore, we would not worried much about missing gwnoa and gwnob values in the dataset. There are no missing values for the variables we are most interested in, which are described in chapter 2. 

@@ -74,8 +74,8 @@
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
-<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflict"><i class="fa fa-check"></i><b>5.1</b> Distribution of the number of deaths based on conflict</a></li>
-<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> Relation between conflict and time</a></li>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflict"><i class="fa fa-check"></i><b>5.1</b> 1. Distribution of the number of deaths based on conflict</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> 2. Relation between conflict and time</a></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#patterns-between-geographical-location-and-type-of-violence"><i class="fa fa-check"></i><b>5.3</b> Patterns between geographical location and type of violence</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
@@ -101,8 +101,32 @@
             <section class="normal" id="section-">
 <div id="interactive-component" class="section level1">
 <h1><span class="header-section-number">Chapter 6</span> Interactive component</h1>
-<iframe src="map.html" width="1200" height="900">
-</iframe>
+<p>This is the interactive part of our conflict anaylsis.
+We store the data in the github repo (<a href="https://github.com/sunyiyangallan/Conflict-Map" class="uri">https://github.com/sunyiyangallan/Conflict-Map</a>), the cleaned up that file and get df_d3.csv using R (as mentioned in the previous chapters).</p>
+<p>Please click <a href="https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1/">this link</a> to view our interactive plot (<a href="https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1/" class="uri">https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1/</a>). It may take sometime to load the plot.</p>
+<p>The D3 <a href="(https://bl.ocks.org/sunyiyangallan/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1)">code</a> is also uploaded to blockbuilder.org; which is also on our project’s GitHub Repo (<a href="https://github.com/tonyytliu/world_conflict_data/tree/master/d3_interactive/code" class="uri">https://github.com/tonyytliu/world_conflict_data/tree/master/d3_interactive/code</a>).</p>
+<p>The total numbers of deaths every year and every country are calculated using D3.</p>
+<p>Instructions for using the plot:</p>
+<ol style="list-style-type: decimal">
+<li>The plot may take a few seconds to initialize. The plot is initialized with a mapping of conflicts in the year of 2018 with no default country specified on the “earth”. Each dot on the map represents a conflict event with at least one death.</li>
+<li>Users can choose the country of their interests by choosing from the select bar on the top left. After selection, then on the top right part, there will be a text displaying the country name, the year, and the total death that year. If the country has at least one conflict event (the event may have 0 death) during 1989 - 2018, there will be a bar chart showing up in the bottom.</li>
+<li>Users can drag the “earth” if they want, if they hover the mouse over the land, the country name will be displayed.</li>
+<li>Users can select the year of interest on the top left part of the plot. If a different year is chosen, the circles will be redrawn, so please be patient.</li>
+<li>The total number of death is calculated using the “best” column in the dataset, which means the best estimate of the number of death.</li>
+<li>The dataset does not contain data from Syria. Therefore, conflict data in Syria is currently unavailable.</li>
+</ol>
+A short demo of the interactive plot:
+<center>
+<img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/d3_interactive/demo/d3demo.gif" style="width:80.0%" />
+</center>
+<p>Reference:</p>
+<ol style="list-style-type: decimal">
+<li>D3 in Depth: Geographic (<a href="https://www.d3indepth.com/geographic/" class="uri">https://www.d3indepth.com/geographic/</a>).</li>
+<li>World Map with D3 and TopoJSON (<a href="https://bl.ocks.org/piwodlaiwo/3734a1357696dcff203a94012646e932" class="uri">https://bl.ocks.org/piwodlaiwo/3734a1357696dcff203a94012646e932</a>).</li>
+<li>GeoJSON Maps of the globe (<a href="https://geojson-maps.ash.ms/" class="uri">https://geojson-maps.ash.ms/</a>).</li>
+<li>Johan’s github project:world.geo.json (<a href="https://github.com/johan/world.geo.json" class="uri">https://github.com/johan/world.geo.json</a>).</li>
+<li>A method for hiding points in geo projection (<a href="https://stackoverflow.com/questions/22366749/how-can-i-determine-if-a-point-is-hidden-on-a-projection" class="uri">https://stackoverflow.com/questions/22366749/how-can-i-determine-if-a-point-is-hidden-on-a-projection</a>).</li>
+</ol>
 
 </div>
             </section>

@@ -74,8 +74,8 @@
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
-<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflict"><i class="fa fa-check"></i><b>5.1</b> Distribution of the number of deaths based on conflict</a></li>
-<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> Relation between conflict and time</a></li>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflict"><i class="fa fa-check"></i><b>5.1</b> 1. Distribution of the number of deaths based on conflict</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> 2. Relation between conflict and time</a></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#patterns-between-geographical-location-and-type-of-violence"><i class="fa fa-check"></i><b>5.3</b> Patterns between geographical location and type of violence</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
@@ -103,148 +103,73 @@
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
 <p>The dataset has a <code>.RData</code> version, which we can directly load using R, therefore, we do not have to worry much about reading the data into R. However, we would like to change the data class of several columns to fit our study better.</p>
 <p>In the original data, all columns with fully numeric values will be considered as “numeric.” For example, the column <code>year</code> would be considered as numeric, and we don’t need to transform it further. However, the <code>type_of_violence</code> column will also be considered as numeric, in which it should be categorical. Therefore, we change the 1, 2, and 3 values in <code>type_of_violence</code> to categories – “state-based conflict”, “non-state conflict”, and &quot; one-sided violence.&quot; Further, we would like to change the <code>date_start</code> and <code>date_end</code> to the DateTime class.</p>
-<p>The dataset we chose is very larger, to save the space, we would like to reduce the dataset only with columns we are might be interested in. The following are the variables and their explanations. Explanations are referred from the codebook of the dataset [<a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">source</a>].</p>
+<p>The dataset we chose is very larger, to save the space, we would like to reduce the dataset only with columns we are might be interested in (as described in Chapter 2). The transformed dataset is stored in “data/clean/df_process.RData”. But in certain instances, we may want to use the original dataset (for example, missing value analysis).</p>
+<p>In our study, we find the most extreme values of this dataset are related to the <a href="https://en.wikipedia.org/wiki/Rwandan_genocide">Rwanda genocide</a> in 1994, which we will have detailed explanations in the following chapters. Sometimes, we need to include these records in our analysis, and sometimes we don’t. Therefore, we decide to have a data frame to record the unique conflict event ID of records related to the Rwanda genocide. Then we can quickly include and filter our these records in our future coding. The data frame is stored as “data/clean/df_rwa.RData”.</p>
+<p>For other transformations made for analysis and visualization, please refer to our code on GitHub <a href="https://github.com/tonyytliu/world_conflict_data">repo</a>.</p>
+<p>In our project, we would also like to investigate the geographic or spatial pattern of the data via the D3 interactive plot. However, some countries/regions’ names in the D3’s geo-map (list of countries are in “data/raw/global-country.tsv”) are different from what we have in the dataset. For the data used in D3, we need to change the country names to make them identical to those in D3’s geo-map. The following countries/regions have different names. The modified data file is stored as “data/clean/df_d3.csv”.</p>
 <table>
 <thead>
 <tr class="header">
-<th align="left">Variable</th>
-<th align="left">Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">id</td>
-<td align="left">An unique ID identifying a conflict event</td>
-</tr>
-<tr class="even">
-<td align="left">date_start</td>
-<td align="left">The earliest possible date when the conflict event has taken place</td>
-</tr>
-<tr class="odd">
-<td align="left">date_end</td>
-<td align="left">The last possible date when the conflict event has taken place</td>
-</tr>
-<tr class="even">
-<td align="left">year</td>
-<td align="left">The year of the conflict event</td>
-</tr>
-<tr class="odd">
-<td align="left">active_year</td>
-<td align="left">1: belongs to an active conflict</td>
-</tr>
-<tr class="even">
-<td align="left">type_of_violence</td>
-<td align="left">1: state-based conflict (involved with a government of a state or any opposition organization or alliance of organizations); 2: non-state conflict (between organized armed groups); 3: one-sided violence (against civilians)</td>
-</tr>
-<tr class="odd">
-<td align="left">side_a/side_b</td>
-<td align="left">The name of the two sides</td>
-</tr>
-<tr class="even">
-<td align="left">longitude/latitude</td>
-<td align="left">Best estimated or the actual location of the conflict event takes place</td>
-</tr>
-<tr class="odd">
-<td align="left">country</td>
-<td align="left">Name of the country of the conflict event takes place</td>
-</tr>
-<tr class="even">
-<td align="left">region</td>
-<td align="left">Africa, Americas, Asia, Europe, Middle East</td>
-</tr>
-<tr class="odd">
-<td align="left">death_*</td>
-<td align="left">Best estimate of fatalities for the specific group</td>
-</tr>
-<tr class="even">
-<td align="left">best</td>
-<td align="left">Best estimate of fatalities resulting from the conflict event</td>
-</tr>
-<tr class="odd">
-<td align="left">high/low</td>
-<td align="left">The highest/lowest estimation of the total fatalities</td>
-</tr>
-</tbody>
-</table>
-<p>But in some instances, we may want to use the original dataset. The transformed dataset is stored in “data/clean/df_process.RData”.</p>
-<p>In our study, we find the most extreme values of this dataset are related to the <a href="https://en.wikipedia.org/wiki/Rwandan_genocide">Rwanda genocide</a> in 1994, which we will have detailed explanations in the following sections. Sometimes, we need to include these records in our analysis, and sometimes we don’t. Therefore, we decide to have a data frame to record the unique conflict event ID of records related to the Rwanda genocide. Then we can quickly include and filter our these records in our future coding. The data frame is stored as “data/clean/df_rwa.RData”.</p>
-<p>For other transformations made for analysis and visualization, please refer to our code on GitHub <a href="https://github.com/tonyytliu/edav_final_project">repo</a>.</p>
-<p>In our project, we would also like to investigate the geographic or spatial pattern of the data. We use the <code>world</code> map data from ggplot’s map_data. However, some countries’ names in the <code>world</code> are different from what we have in the dataset. We want to modify the country name of <code>world</code> map data to make them identical with the name in our dataset. The following countries have different names. The modified <code>world</code> data file is stored as “data/clean/WorldData.RData”.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">in_ggplot_map</th>
 <th align="left">in_dataset</th>
+<th align="left">in_d3_geo</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Democratic Republic of the Congo</td>
-<td align="left">DR Congo (Zaire)</td>
-</tr>
-<tr class="even">
-<td align="left">Republic of Congo</td>
-<td align="left">Congo</td>
-</tr>
-<tr class="odd">
-<td align="left">Russia</td>
 <td align="left">Russia (Soviet Union)</td>
+<td align="left">Russia</td>
 </tr>
 <tr class="even">
-<td align="left">Yemen</td>
 <td align="left">Yemen (North Yemen)</td>
+<td align="left">Yemen</td>
 </tr>
 <tr class="odd">
-<td align="left">Myanmar</td>
 <td align="left">Myanmar (Burma)</td>
+<td align="left">Myanmar</td>
 </tr>
 <tr class="even">
-<td align="left">Cambodia</td>
 <td align="left">Cambodia (Kampuchea)</td>
+<td align="left">Cambodia</td>
 </tr>
 <tr class="odd">
-<td align="left">UK</td>
-<td align="left">United Kingdom</td>
+<td align="left">Ivory Coast</td>
+<td align="left">Cote d’Ivoire</td>
 </tr>
 <tr class="even">
-<td align="left">Zimbabwe</td>
 <td align="left">Zimbabwe (Rhodesia)</td>
+<td align="left">Zimbabwe</td>
 </tr>
 <tr class="odd">
-<td align="left">Bosnia and Herzegovina</td>
-<td align="left">Bosnia-Herzegovina</td>
-</tr>
-<tr class="even">
-<td align="left">Serbia</td>
 <td align="left">Serbia (Yugoslavia)</td>
+<td align="left">Serbia</td>
 </tr>
-<tr class="odd">
-<td align="left">Macedonia</td>
+<tr class="even">
 <td align="left">Macedonia, FYR</td>
+<td align="left">Macedonia</td>
 </tr>
-<tr class="even">
-<td align="left">Swaziland</td>
+<tr class="odd">
 <td align="left">Kingdom of eSwatini (Swaziland)</td>
+<td align="left">Swaziland</td>
 </tr>
-<tr class="odd">
-<td align="left">Romania</td>
+<tr class="even">
 <td align="left">Rumania</td>
-</tr>
-<tr class="even">
-<td align="left">Trinidad</td>
-<td align="left">Trinidad and Tobago</td>
+<td align="left">Romania</td>
 </tr>
 <tr class="odd">
-<td align="left">Tobago</td>
-<td align="left">Trinidad and Tobago</td>
-</tr>
-<tr class="even">
-<td align="left">USA</td>
 <td align="left">United States of America</td>
+<td align="left">United States</td>
+</tr>
+<tr class="even">
+<td align="left">Madagascar (Malagasy)</td>
+<td align="left">Madagascar</td>
 </tr>
 <tr class="odd">
-<td align="left">Madagascar</td>
-<td align="left">Madagascar (Malagasy)</td>
+<td align="left">DR Congo (Zaire)</td>
+<td align="left">DR Congo</td>
+</tr>
+<tr class="even">
+<td align="left">China</td>
+<td align="left">China, Mainland</td>
 </tr>
 </tbody>
 </table>

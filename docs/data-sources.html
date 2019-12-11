@@ -74,8 +74,8 @@
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
-<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflict"><i class="fa fa-check"></i><b>5.1</b> Distribution of the number of deaths based on conflict</a></li>
-<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> Relation between conflict and time</a></li>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflict"><i class="fa fa-check"></i><b>5.1</b> 1. Distribution of the number of deaths based on conflict</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> 2. Relation between conflict and time</a></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#patterns-between-geographical-location-and-type-of-violence"><i class="fa fa-check"></i><b>5.3</b> Patterns between geographical location and type of violence</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
@@ -101,6 +101,70 @@
             <section class="normal" id="section-">
 <div id="data-sources" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> Data sources</h1>
+<p>UCDP Georeferenced Event Dataset (GED) Global version 19.1 from UCDP Dataset (<a href="https://ucdp.uu.se/downloads/index.html#ged_global" class="uri">https://ucdp.uu.se/downloads/index.html#ged_global</a>) is used in our project, this dataset covers “individual events of organized violence (phenomena of lethal violence occurring at a given time and place)” in a world-wide perspective [<a href="https://ucdp.uu.se/downloads/index.html#ged_global">source</a>].</p>
+<p>There are 152616 recordes in the dataset, and each record in the dataset is an event of a specific conflict. An event of a conflict is defined as “An incident where armed force was used by an organized actor against another organized actor, or against civilians.” [<a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">source</a>].</p>
+<p>To avoid potential ambiguities, “conflict event” is used in our project to express the term “event” in the original terminology. This dataset contains data of armed conflict events from a world-wide perspective, from 1989 to 2018; includes the time, geographic location, type, casualties, and other information regarding the conflict event.</p>
+<p>There are a total of 43 variables in the original dataset, and for the full definitions and explanations of variables, please refer to the dataset’s codebook [<a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">source</a>]. However, there are some repeated variables. For example, there are several variables to represent the geo-location of one conflict event, they refer to the same location, but in different formats to suit different geographic databases. In our study, for the location variables, we are only interested in the vanilla <code>latitude</code> and <code>longitude</code> variables.</p>
+<p>For the propose of analyzing conflicts’ data patterns in this project, we mostly focus on a subset of variables; the following are the variables and their explanations. Explanations are referred from the codebook of the dataset [<a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">source</a>].</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Variable</th>
+<th align="left">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">id</td>
+<td align="left">An unique ID identifying a conflict event</td>
+</tr>
+<tr class="even">
+<td align="left">date_start</td>
+<td align="left">The earliest possible date when the conflict event has taken place</td>
+</tr>
+<tr class="odd">
+<td align="left">date_end</td>
+<td align="left">The last possible date when the conflict event has taken place</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="left">The year of the conflict event</td>
+</tr>
+<tr class="odd">
+<td align="left">type_of_violence</td>
+<td align="left">1: state-based conflict (involved with a government of a state or any opposition organization or alliance of organizations); 2: non-state conflict (between organized armed groups); 3: one-sided violence (against civilians)</td>
+</tr>
+<tr class="even">
+<td align="left">side_a/side_b</td>
+<td align="left">The name of the two sides</td>
+</tr>
+<tr class="odd">
+<td align="left">longitude/latitude</td>
+<td align="left">Best estimated or the actual location of the conflict event takes place</td>
+</tr>
+<tr class="even">
+<td align="left">country</td>
+<td align="left">Name of the country of the conflict event takes place</td>
+</tr>
+<tr class="odd">
+<td align="left">region</td>
+<td align="left">Africa, Americas, Asia, Europe, Middle East</td>
+</tr>
+<tr class="even">
+<td align="left">death_*</td>
+<td align="left">Best estimate of fatalities for the specific group</td>
+</tr>
+<tr class="odd">
+<td align="left">best</td>
+<td align="left">Best estimate of fatalities resulting from the conflict event</td>
+</tr>
+<tr class="even">
+<td align="left">high/low</td>
+<td align="left">The highest/lowest estimation of the total fatalities</td>
+</tr>
+</tbody>
+</table>
+<p>One point that needs to be noticed of this dataset is “[the] [d]ata for Syria is not included in the current version” (<a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">source</a>, p. 3). And as mentioned in the dataset’s <a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">codebook</a>, “the data collection for Syria is ongoing but the final product is not releasable at this time with the same level of consistency and clarity as other UCDP GED data.” Thus, the actual total number of conflict events and deaths in recent years should be larger than the records in the dataset.</p>
 
 </div>
             </section>

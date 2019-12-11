@@ -1,13 +1,15 @@
 # Results
 
+
 ```{r}
 load(here("data", "clean", "df_process.RData"))
 load(here("data", "clean", "df_rwa.RData"))
-load(here("data", "clean", "WorldData.RData"))
+# template code for getting world data refer to  https://stackoverflow.com/questions/30706124/plotting-the-world-map-in-r
+WorldData <- map_data('world') %>% filter(region != "Antarctica") %>% fortify
 ```
 
 
-## Distribution of the number of deaths based on conflict
+## 1. Distribution of the number of deaths based on conflict
 ```{r, fig.width=10}
 df_process1<- df_process %>%
               mutate(best_in_1k = best/1000, 
@@ -16,7 +18,9 @@ g1 <- ggplot(df_process1, aes(x = best_in_1k)) +
         geom_histogram(bins = 20, colour = "#80593D", fill = "steelblue") +
         scale_x_continuous(breaks= pretty_breaks()) +
         ggtitle("Distribution of deaths caused by conflict events") +
-        labs(x="Best estimated deaths, in thousands (1,000) of deaths")
+        labs(x="Best estimated deaths, in thousands (1,000) of deaths")+
+        theme(plot.title = element_text(face='bold',hjust=0.5),
+              plot.subtitle = element_text(hjust=0.5))
 # only small values
 df_process2 <- df_process %>%
               filter(best < 100)
@@ -25,7 +29,9 @@ g2<- ggplot(df_process2, aes(x = best)) +
         scale_x_continuous(breaks= pretty_breaks()) +
         ggtitle("Distribution of conflicts deaths caused by conflict events",
                 subtitle = "with death < 100") +
-        labs(x="Best estimated deaths")
+        labs(x="Best estimated deaths")+
+        theme(plot.title = element_text(face='bold',hjust=0.5),
+              plot.subtitle = element_text(hjust=0.5))
 
 df_process3 <- df_process %>%
               filter(best < 20)
@@ -34,7 +40,9 @@ g3<- ggplot(df_process3, aes(x = best)) +
         scale_x_continuous(breaks= pretty_breaks()) +
         ggtitle("Distribution of conflicts deaths caused by conflict events",
                 subtitle = "with death < 20") +
-        labs(x="Best estimated deaths")
+        labs(x="Best estimated deaths")+
+        theme(plot.title = element_text(face='bold',hjust=0.5),
+              plot.subtitle = element_text(hjust=0.5))
 
 df_process4<- df_process %>%
               filter(best >= 10000)%>%
@@ -45,7 +53,9 @@ g4<- ggplot(df_process4, aes(x = best_in_1k)) +
         scale_x_continuous(breaks= pretty_breaks()) +
         ggtitle("Distribution of conflicts deaths caused by conflict events",
                 subtitle = "with death >= 10,000") +
-        labs(x="Best estimated deaths, in thousands (1,000) of deaths")
+        labs(x="Best estimated deaths, in thousands (1,000) of deaths")+
+        theme(plot.title = element_text(face='bold',hjust=0.5),
+              plot.subtitle = element_text(hjust=0.5))
 
 ggarrange(g1, g2, g3, g4, ncol = 2, nrow = 2)
 ```
@@ -64,7 +74,8 @@ ggplot(df_process5, aes(x = best_in_1k, y = reorder(name, best))) +
       geom_point(color = "steelblue") +
       labs(x="Best estimated deaths, in thousands (1,000) of deaths",
            y="Confict Event ID: Country") + 
-      ggtitle("Confict events causing most deaths")
+      ggtitle("Confict events causing most deaths")+
+        theme(plot.title = element_text(face='bold',hjust=0.5))
 ```
 
 The above Cleveland plot shows top conflict events which caused most deaths ($\geq$ 5,000), there is a conflict event happened in Rwanda caused approximately 300,000 deaths, which is much more than other conflicts event. Also, most of those events causing significant fatalities were taken place in Rwanda. 
@@ -78,7 +89,7 @@ knitr::kable(df_2)
 After an investigation of those conflict events, we found out most of them are between the Government of Rewanda and civilians, which was related to the [Rwanda genocide](https://en.wikipedia.org/wiki/Rwandan_genocide) in 1994.
 
 
-## Relation between conflict and time
+## 2. Relation between conflict and time
 
 ```{r, fig.width=5, fig.height=3}
 df_count <- df_process %>%
@@ -88,7 +99,8 @@ ggplot(df_count, aes(x = year, y = n)) +
       geom_bar(stat = "identity", fill = "steelblue") +
       ggtitle("Number of conflict events based on year") +
       labs(y = "number of conflict events") +
-      scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1))
+      scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1))+
+        theme(plot.title = element_text(face='bold',hjust=0.5))
 ```
 
 As shown in the bar chart, the number of conflict events that occur in each year tends to increase from 1998 to 2018. The number of conflicts is lowest in 1997.
@@ -97,27 +109,32 @@ As shown in the bar chart, the number of conflict events that occur in each year
 # get conflicts' deaths by year
 df_sum <- df_process %>%
             group_by(year) %>%
-            summarise_at(vars(best), funs(sum))
+            summarise_at(vars(best), funs(sum)) %>%
+              mutate(best_in_1k = best/1000)
 
 # get conflicts' deaths by year without the Rwanda genocide
 df_sum2 <- df_process %>%
             filter(!(df_process$id %in% df_rwa$id)) %>%
             group_by(year) %>%
-            summarise_at(vars(best), funs(sum))
+            summarise_at(vars(best), funs(sum)) %>%
+              mutate(best_in_1k = best/1000)
 ```
 ```{r, fig.width=10, fig.height=3}
-g5<- ggplot(df_sum, aes(x = year, y = best)) +
+g5<- ggplot(df_sum, aes(x = year, y = best_in_1k)) +
         geom_bar(stat = "identity", fill = "steelblue") +
         ggtitle("Deaths caused by conflicts based on year") +
-        labs(y = "number of deaths") +
-        scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1))
+        labs(y = "number of deaths, in thousands (1,000)") +
+        scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1))+
+        theme(plot.title = element_text(face='bold',hjust=0.5))
 
-g6<- ggplot(df_sum2, aes(x = year, y = best)) +
+g6<- ggplot(df_sum2, aes(x = year, y = best_in_1k)) +
         geom_bar(stat = "identity", fill = "steelblue") +
         ggtitle("Deaths caused by conflicts based on year",
                 subtitle="without the data of the Rwanda genocide") +
-        labs(y = "number of deaths") + 
-        scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1))
+        labs(y = "number of deaths, in thousands (1,000)") + 
+        scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1))+
+        theme(plot.title = element_text(face='bold',hjust=0.5),
+              plot.subtitle = element_text(hjust=0.5))
 
 ggarrange(g5, g6, ncol = 2, nrow = 1)
 ```
@@ -134,7 +151,9 @@ ggplot(df_type, aes(fill=type_of_violence, x=year, y=n)) +
     theme(legend.position='bottom') +
     labs(x="year", y="number of conflict events", fill="violence type") + 
     ggtitle("Number of conflict events based on year and type") +
-    scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1))
+    scale_fill_viridis_d()+
+    scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1)) +
+        theme(plot.title = element_text(face='bold',hjust=0.5))
 ```
 
 Most conflict events are state-based conflict, i.e., the conflict involved with "[a] government of a state or any opposition organization or alliance of organizations" [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf), pp.28-29], which is higher in number comparing to the other two types of conflict. Before 2018, there are more one-side conflicts (against civilians) than non-state conflicts (between two armed groups).  But in 2018, there are more non-state conflicts compare to one-side conflict. 
@@ -149,15 +168,17 @@ library(tidyverse)
 df_civ <- df_process %>%
               group_by(year) %>%
               summarise_at(vars(best, deaths_civilians), funs(sum))%>% 
+              mutate(best = best/1000, deaths_civilians = deaths_civilians/1000)%>%
               mutate(deaths_non_civilians = best-deaths_civilians)%>% 
               select(year, deaths_civilians, deaths_non_civilians) %>% 
               gather(`deaths_civilians`, `deaths_non_civilians`, 
-                     key = "section", value = "deaths")
+                     key = "section", value = "deaths") 
 
 df_civ2 <- df_process %>%
             filter(!(df_process$id %in% df_rwa$id)) %>%
             group_by(year) %>%
             summarise_at(vars(best, deaths_civilians), funs(sum))%>% 
+            mutate(best = best/1000, deaths_civilians = deaths_civilians/1000)%>%
             mutate(deaths_non_civilians = best-deaths_civilians)%>% 
             select(year, deaths_civilians, deaths_non_civilians) %>% 
             gather(`deaths_civilians`, `deaths_non_civilians`, 
@@ -167,19 +188,24 @@ df_civ2 <- df_process %>%
 gc1 <- ggplot(df_civ, aes(fill=section, y=deaths, x=year)) +
         geom_bar(position="stack", stat="identity") + 
         theme(legend.position='bottom') +
-        labs(x="year", y="number of deaths", fill="civilian death?") + 
+        labs(x="year", y="number of deaths, in thousands (1,000)", fill="civilian death?") + 
         ggtitle("Deaths caused by conflicts based on year") +
         scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1)) +
-        guides(fill = guide_legend(reverse=TRUE)) 
+        scale_fill_viridis_d()+
+        guides(fill = guide_legend(reverse=TRUE)) +
+        theme(plot.title = element_text(face='bold',hjust=0.5))
 
 gc2 <- ggplot(df_civ2, aes(fill=section, y=deaths, x=year)) +
         geom_bar(position="stack", stat="identity") + 
         theme(legend.position='bottom') +
-        labs(x="year", y="number of deaths", fill="civilian death?") + 
+        labs(x="year", y="number of deaths, in thousands (1,000)", fill="civilian death?") + 
         ggtitle("Deaths caused by conflicts based on year",
                 subtitle="without the data of the Rwanda genocide") +
         scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1)) +
-        guides(fill = guide_legend(reverse=TRUE)) 
+        scale_fill_viridis_d()+ 
+        guides(fill = guide_legend(reverse=TRUE)) +
+        theme(plot.title = element_text(face='bold',hjust=0.5),
+              plot.subtitle = element_text(hjust=0.5))
 
 ggarrange(gc1, gc2, ncol = 2, nrow = 1)
 ```
@@ -210,7 +236,9 @@ gc3 <- ggplot(df_civ3, aes(fill=section, y=deaths, x=year)) +
         ggtitle("Deaths caused by conflicts based on year") +
         coord_flip() +
         scale_x_reverse(breaks = round(seq(1990,2018, by = 5),1)) +
-        guides(fill = guide_legend(reverse=TRUE)) 
+        scale_fill_viridis_d()+
+        guides(fill = guide_legend(reverse=TRUE)) +
+        theme(plot.title = element_text(face='bold',hjust=0.5))
 
 gc4 <- ggplot(df_civ4, aes(fill=section, y=deaths, x=year)) +
         geom_bar(position="stack", stat="identity") + 
@@ -220,7 +248,10 @@ gc4 <- ggplot(df_civ4, aes(fill=section, y=deaths, x=year)) +
                 subtitle="without the data of the Rwanda genocide") +
         coord_flip() +
         scale_x_reverse(breaks = round(seq(1990,2018, by = 5),1)) +
-        guides(fill = guide_legend(reverse=TRUE)) 
+        scale_fill_viridis_d()+
+        guides(fill = guide_legend(reverse=TRUE))  +
+        theme(plot.title = element_text(face='bold',hjust=0.5),
+              plot.subtitle = element_text(hjust=0.5))
 
 ggarrange( gc3, gc4, ncol = 2, nrow = 1)
 ```
