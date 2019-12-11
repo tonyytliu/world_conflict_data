@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Missing values | YOUR TITLE HERE</title>
-  <meta name="description" content="Chapter 4 Missing values | YOUR TITLE HERE" />
+  <title>Chapter 4 Missing values | World’s Armed Conflicts Data</title>
+  <meta name="description" content="Chapter 4 Missing values | World’s Armed Conflicts Data" />
   <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Missing values | YOUR TITLE HERE" />
+  <meta property="og:title" content="Chapter 4 Missing values | World’s Armed Conflicts Data" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,15 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Missing values | YOUR TITLE HERE" />
+  <meta name="twitter:title" content="Chapter 4 Missing values | World’s Armed Conflicts Data" />
   
   
   
 
-<meta name="author" content="YOUR NAMES HERE" />
+<meta name="author" content="Yitao Liu (yl4343), Boyu Liu (bl2788), Yiyang Sun (ys3284)" />
 
 
-<meta name="date" content="2019-11-23" />
+<meta name="date" content="2019-12-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -66,14 +66,17 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">SHORT TITLE HERE</a></li>
+<li><a href="./">World's Conflicts Data</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflict"><i class="fa fa-check"></i><b>5.1</b> Distribution of the number of deaths based on conflict</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> Relation between conflict and time</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -87,7 +90,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">YOUR TITLE HERE</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">World’s Armed Conflicts Data</a>
           </h1>
         </div>
 
@@ -97,6 +100,38 @@
             <section class="normal" id="section-">
 <div id="missing-values" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
+<p>There are 152616 rows in the dataset, and the following outputs are the number of rows missing for the specific variable. We do not need to know the detailed explanations of each variable at the current stage, the descriptions of certain variables are included in the previous Section III. For the full explanations of each variable, please refer to the <a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">codebook</a>.</p>
+<pre><code>##             gwnob             gwnoa              year            side_b 
+##            151812             35321                 0                 0 
+##       active_year            side_a      priogrid_gid   conflict_new_id 
+##                 0                 0                 0                 0 
+##        country_id            region    source_article  type_of_violence 
+##                 0                 0                 0                 0 
+##         date_prec   source_headline     conflict_name         dyad_name 
+##                 0                 0                 0                 0 
+##     event_clarity where_coordinates          date_end     side_b_new_id 
+##                 0                 0                 0                 0 
+##       dyad_new_id              high     source_office  deaths_civilians 
+##                 0                 0                 0                 0 
+##              best number_of_sources       source_date         longitude 
+##                 0                 0                 0                 0 
+##        where_prec     side_a_new_id                id   source_original 
+##                 0                 0                 0                 0 
+##             adm_1           country             adm_2          latitude 
+##                 0                 0                 0                 0 
+##          geom_wkt        date_start          deaths_a          deaths_b 
+##                 0                 0                 0                 0 
+##    deaths_unknown               low          geometry 
+##                 0                 0                 0</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>There are only 2 variables that contains a lot of missing variables, gwnob and gwnoa. gwnoa is The Gleditsch and Ward number for Side A if the side is a state. If side A is not a state, then gwnoa will be missing. Similarly, gwnob is The Gleditsch and Ward number for Side B. It will be missing if side B is not a state. The reason why gwnob has more missing values is that in one-sided violence, side B will be recorded as “civilians” in this dataset, which is definitely not a state.
+Meanwhile, there are 152616 rows in the dataset. The number of missing values in gwnob column is 151812. gwnob of most rows are missing.</p>
+<p>However, for row patterns, we already know that, in each row, if side A is not a state, gwnoa will be missing and if side B is not a state, gwnob will be missing.
+<img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" />
+<img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" />
+From the graph, we can see that most rows has at least one missing value, which correspondes to our analysis for column patterns that gwnob of most rows are missing.</p>
+<p>As mentioned in Section III “Data transformation,” we are most interested in certain sets of variables, gwnoa and gwnob are not considered as “very important” in our project. Therefore, we would not worried much about missing gwnoa and gwnob values in the dataset. There are no missing values for the variables we are most interested in, which are described in Section III “Data transformation.”</p>
 
 </div>
             </section>
@@ -136,7 +171,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/master/04-missing.Rmd",
+"link": "https://github.com/tonyytliu/EDAV_Project/edit/master/04-missing.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -144,7 +179,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/master/04-missing.Rmd",
+"link": "https://github.com/tonyytliu/EDAV_Project/blob/master/04-missing.Rmd",
 "text": null
 },
 "download": null,
@@ -155,6 +190,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

@@ -1,0 +1,109 @@
+---
+title: "Data_Clean"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(here)
+```
+
+```{r}
+# Load the Dataset
+load(here("data", "raw", "ged191.RData"))
+```
+
+```{r}
+df_processing <- ged191 %>%
+            mutate(date_start = as.Date(date_start)) %>%
+            mutate(date_end = as.Date(date_end))
+```
+Add the duration of each conflicts.
+```{r}
+# duration_mon <- function(end, start){
+#   # reference to https://stackoverflow.com/questions/1995933/number-of-months-between-two-dates
+#   ed <- as.POSIXlt(end)
+#   sd <- as.POSIXlt(start)
+#   md <- 12 * (ed$year - sd$year) + (ed$mon - sd$mon) + 1
+#   return(md)
+# }
+# df_processing$duration_month = duration_mon(df_processing$date_end, df_processing$date_start)
+df_processing$duration = df_processing$date_end - df_processing$date_start + 1
+```
+
+Expand the data frame based on dates, that is
+
+transform
++----+------------+------------+
++ id + date_start +  date_end  +
++----+------------+------------+
++ 01 + 2000-01-01 + 2000-01-01 +
++ 02 + 2000-01-01 + 2000-01-02 +
++----+------------+------------+
+
+to
+
++----+------------+------------+------------+
++ id + date_start +  date_end  +    date    +
++----+------------+------------+------------+
++ 01 + 2000-01-01 + 2000-01-01 + 2000-01-01 +
++ 02 + 2000-01-01 + 2000-01-02 + 2000-01-01 +
++ 02 + 2000-01-01 + 2000-01-02 + 2000-01-02 +
++----+------------+------------+------------+
+
+
+```{r}
+temp <- df_processing %>%
+        rowwise() %>%
+        do(data.frame(id = .$id, dates=seq(.$date_start,.$date_end,by="1 day")))
+
+df_new <- merge(df_processing, temp, by="id")
+```
+```{r}
+df_new <- df_new %>%
+          mutate(avg_deaths_a = deaths_a/as.numeric(duration),
+                 avg_deaths_b = deaths_b/as.numeric(duration),
+                 avg_deaths_civilians = deaths_civilians/as.numeric(duration),
+                 avg_deaths_unknown = deaths_unknown/as.numeric(duration),
+                 avg_best = best/as.numeric(duration),
+                 avg_high = high/as.numeric(duration),
+                 avg_low = low/as.numeric(duration))
+```
+
+Save Data
+```{r}
+save(df_new, file = here("data", "clean", "df_new.RData"))
+```
+
+```{r}
+library(ggplot2)
+load(here("data", "clean", "df_new.RData"))
+```
+
+```{r, fig.width=10,fig.height=5}
+
+# df_d <- df_new %>% 
+#           select(dates, avg_best, region) %>%
+#           # mutate(year = as.character(year))%>%
+#           group_by(dates, region) %>%
+#           # filter(dates >= "2015-01-01") %>%
+#           summarise(avg_best = sum(avg_best))
+# ggplot(df_d, aes(lubridate::yday(df_d$dates), avg_best,
+#                  color = region) ) + 
+#   geom_line(aes(y = zoo::rollmean(avg_best, 200, align = "center", fill = NA))
+#             )
+```
+```{r}
+
+```
+
+```{r}
+df_d2 <- df_new %>% 
+          filter(dates == "1999-06-18") %>% 
+          select(id, side_a, side_b, conflict_name, best, avg_best, date_start, date_end)  %>% 
+          group_by(id, side_a, side_b, conflict_name, best,  date_start, date_end)  %>%
+          summarise(avg_best)
+
+```
+

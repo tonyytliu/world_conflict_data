@@ -1,1 +1,187 @@
 # Data transformation
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE, fig.align='center')
+library(dplyr)
+library(here)
+library(ggplot2)
+library(ggpubr)
+library(mapproj)
+library(scales)
+library(naniar)
+library(extracat)
+```
+
+The dataset has a `.RData` version, which we can directly load using R, therefore, we do not have to worry much about reading the data into R. However, we would like to change the data class of several columns to fit our study better.
+
+In the original data, all columns with fully numeric values will be considered as "numeric." For example, the column `year` would be considered as numeric, and we don't need to transform it further. However, the `type_of_violence` column will also be considered as numeric, in which it should be categorical. Therefore, we change the 1, 2, and 3 values in `type_of_violence` to categories -- "state-based conflict", "non-state conflict", and " one-sided violence." Further, we would like to change the `date_start` and `date_end` to the DateTime class.
+
+The dataset we chose is very larger, to save the space, we would like to reduce the dataset only with columns we are might be interested in。 The following are the variables and their explanations. Explanations are referred from the codebook of the dataset [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf)].
+```{r echo= FALSE, results= 'asis'}
+var_ex = data.frame(
+  Variable = c("id",
+               "date_start",
+               "date_end",
+               "year",
+               "active_year",
+               "type_of_violence",
+               "side_a/side_b",
+               "longitude/latitude",
+               "country",
+               "region",
+               "death_*",
+               "best",
+               "high/low"),
+  Explanation = c("An unique ID identifying a conflict event",
+                "The earliest possible date when the conflict event has taken place",
+                "The last possible date when the conflict event has taken place",
+                "The year of the conflict event",
+                "1: belongs to an active conflict",
+                "1: state-based conflict (involved with a government of a state or any opposition organization or alliance of organizations); 2: non-state conflict (between organized armed groups); 3: one-sided violence (against civilians)",
+                "The name of the two sides",
+                "Best estimated or the actual location of the conflict event takes place",
+                "Name of the country of the conflict event takes place",
+                "Africa, Americas, Asia, Europe, Middle East",
+                "Best estimate of fatalities for the specific group",
+                "Best estimate of fatalities resulting from the conflict event",
+                "The highest/lowest estimation of the total fatalities"))
+kable(var_ex)
+```
+
+But in some instances, we may want to use the original dataset. The transformed dataset is stored in "data/clean/df_process.RData".
+
+```{r}
+load(here("data", "raw", "ged191.RData"))
+df_process <- ged191 %>%
+              mutate(date_start = as.Date(date_start),
+                     date_end = as.Date(date_end),
+                     type_of_violence = ifelse(type_of_violence == 1, "state-based conflict",
+                                               ifelse(type_of_violence == 2, "non-state conflict", "one-side violence"))) %>%
+              select(id, date_start, date_end, year, active_year, type_of_violence,
+                     side_a, side_b, longitude, latitude, country, region, deaths_a,
+                     deaths_b, deaths_civilians, best, low, high)
+# save the data to the cleaning data
+save(df_process, file = here("data", "clean", "df_process.RData"))
+```
+
+In our study, we find the most extreme values of this dataset are related to the [Rwanda genocide](https://en.wikipedia.org/wiki/Rwandan_genocide) in 1994, which we will have detailed explanations in the following sections. Sometimes, we need to include these records in our analysis, and sometimes we don't. Therefore, we decide to have a data frame to record the unique conflict event ID of records related to the Rwanda genocide. Then we can quickly include and filter our these records in our future coding. The data frame is stored as "data/clean/df_rwa.RData".
+
+For other transformations made for analysis and visualization, please refer to our code on GitHub [repo](https://github.com/tonyytliu/edav_final_project).
+
+```{r}
+# get conflicts related with the Rwanda genocide, between 1994-04-01 and 1994-07-31
+df_rwa <- df_process %>%
+          filter(side_a == "Government of Rwanda",
+                 side_b == "Civilians",
+                 date_end <= as.Date("1994-07-31"),
+                 date_start >= as.Date("1994-04-01")) %>%
+          select(id)
+save(df_rwa, file = here("data", "clean", "df_rwa.RData"))
+```
+
+In our project, we would also like to investigate the geographic or spatial pattern of the data. We use the `world` map data from ggplot's map_data. However, some countries' names in the `world` are different from what we have in the dataset.  We want to modify the country name of `world` map data to make them identical with the name in our dataset. The following countries have different names. The modified `world` data file is stored as "data/clean/WorldData.RData".
+
+```{r echo= FALSE, results= 'asis'}
+county_name = data.frame(
+  in_ggplot_map = c("Democratic Republic of the Congo",
+               "Republic of Congo",
+               "Russia",
+               "Yemen",
+               "Myanmar",
+               "Cambodia",
+               "UK",
+               "Zimbabwe",
+               "Bosnia and Herzegovina",
+               "Serbia",
+               "Macedonia",
+               "Swaziland",
+               "Romania",
+               "Trinidad",
+               "Tobago",
+               "USA",
+               "Madagascar"
+               ),
+  in_dataset =c("DR Congo (Zaire)",
+                 "Congo",
+                 "Russia (Soviet Union)",
+                 "Yemen (North Yemen)",
+                 "Myanmar (Burma)",
+                 "Cambodia (Kampuchea)",
+                 "United Kingdom",
+                 "Zimbabwe (Rhodesia)",
+                 "Bosnia-Herzegovina",
+                 "Serbia (Yugoslavia)",
+                 "Macedonia, FYR",
+                 "Kingdom of eSwatini (Swaziland)",
+                 "Rumania",
+                 "Trinidad and Tobago",
+                 "Trinidad and Tobago",
+                 "United States of America",
+                 "Madagascar (Malagasy)"
+                 ) )
+kable(county_name)
+```
+
+```{r}
+# template code for getting world data refer to  https://stackoverflow.com/questions/30706124/plotting-the-world-map-in-r
+WorldData <- map_data('world') %>% filter(region != "Antarctica") %>% fortify
+
+a <- setNames(as.data.frame(unique(df_process$country)), "country")
+a$country2 = a$country
+
+b <- setNames(as.data.frame(unique(WorldData$region)), "region")
+b$region2 = b$region
+
+#check the differences
+temp4 <- full_join(a, b, by = c("country" = "region"))
+
+
+WorldData$region <-plyr::mapvalues(WorldData$region, 
+            from=c("Democratic Republic of the Congo",
+               "Republic of Congo",
+               "Russia",
+               "Yemen",
+               "Myanmar",
+               "Cambodia",
+               "UK",
+               "Zimbabwe",
+               "Bosnia and Herzegovina",
+               "Serbia",
+               "Macedonia",
+               "Swaziland",
+               "Romania",
+               "Trinidad",
+               "Tobago",
+               "USA",
+               "Madagascar"
+               ),
+          to=c("DR Congo (Zaire)",
+                 "Congo",
+                 "Russia (Soviet Union)",
+                 "Yemen (North Yemen)",
+                 "Myanmar (Burma)",
+                 "Cambodia (Kampuchea)",
+                 "United Kingdom",
+                 "Zimbabwe (Rhodesia)",
+                 "Bosnia-Herzegovina",
+                 "Serbia (Yugoslavia)",
+                 "Macedonia, FYR",
+                 "Kingdom of eSwatini (Swaziland)",
+                 "Rumania",
+                 "Trinidad and Tobago",
+                 "Trinidad and Tobago",
+                 "United States of America",
+                 "Madagascar (Malagasy)"
+                 ) 
+          )
+
+a <- setNames(as.data.frame(unique(df_process$country)), "country")
+a$country2 = a$country
+
+b <- setNames(as.data.frame(unique(WorldData$region)), "region")
+b$region2 = b$region
+
+temp5 <- full_join(a, b, by = c("country" = "region"))
+
+save(WorldData, file = here("data", "clean", "WorldData.RData"))
+```

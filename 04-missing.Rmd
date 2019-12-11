@@ -1,1 +1,38 @@
 # Missing values
+
+
+There are 152616 rows in the dataset, and the following outputs are the number of rows missing for the specific variable. We do not need to know the detailed explanations of each variable at the current stage, the descriptions of certain variables are included in the previous Section III. For the full explanations of each variable, please refer to the [codebook](https://ucdp.uu.se/downloads/ged/ged191.pdf).
+
+```{r}
+load(here("data", "raw", "ged191.RData"))
+load(here("data", "clean", "df_process.RData"))
+colSums(is.na(ged191)) %>% sort(decreasing = TRUE)
+# nrow(ged191)
+```
+
+```{r,fig.width=10, fig.height=5}
+library(naniar)
+gg_miss_var(ged191)+
+  ggtitle("Missing column patterns by decreasing number of missing values")+
+  theme(plot.title = element_text(size = 15, face = "bold",hjust = 0.5))
+```
+```{r,fig.width=10, fig.height=6}
+library(extracat)
+visna(ged191,sort='c')
+```
+
+There are only 2 variables that contains a lot of missing variables, gwnob and gwnoa. gwnoa is The Gleditsch and Ward number for Side A if the side is a state. If side A is not a state, then gwnoa will be missing. Similarly, gwnob is The Gleditsch and Ward number for Side B. It will be missing if side B is not a state. The reason why gwnob has more missing values is that in one-sided violence, side B will be recorded as "civilians" in this dataset, which is definitely not a state.
+Meanwhile, there are 152616 rows in the dataset. The number of missing values in gwnob column is 151812. gwnob of most rows are missing.
+
+However, for row patterns, we already know that, in each row, if side A is not a state, gwnoa will be missing and if side B is not a state, gwnob will be missing.
+```{r,fig.width=10, fig.height=3}
+gg_miss_case(ged191)+
+  ggtitle("Missing row patterns by decreasing number of missing values")+
+  theme(plot.title = element_text(size = 15, face = "bold",hjust = 0.5))
+```
+```{r,fig.width=10, fig.height=6}
+visna(ged191,sort='r')
+```
+From the graph, we can see that most rows has at least one missing value, which correspondes to our analysis for column patterns that gwnob of most rows are missing. 
+
+As mentioned in Section III "Data transformation," we are most interested in certain sets of variables, gwnoa and gwnob are not considered as "very important" in our project. Therefore, we would not worried much about missing gwnoa and gwnob values in the dataset. There are no missing values for the variables we are most interested in, which are described in Section III "Data transformation." 
