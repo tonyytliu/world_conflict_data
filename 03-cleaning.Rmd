@@ -50,6 +50,7 @@ df_process <- ged191 %>%
                      deaths_b, deaths_civilians, best, low, high)
 # save the data to the cleaning data
 save(df_process, file = here("data", "clean", "df_process.RData"))
+save(df_process, file = here("data", "clean", "df_process.csv"))
 ```
 
 In our study, we find the most extreme values of this dataset are related to the [Rwanda genocide](https://en.wikipedia.org/wiki/Rwandan_genocide) in 1994, which we will have detailed explanations in the following sections. Sometimes, we need to include these records in our analysis, and sometimes we don't. Therefore, we decide to have a data frame to record the unique conflict event ID of records related to the Rwanda genocide. Then we can quickly include and filter our these records in our future coding. The data frame is stored as "data/clean/df_rwa.RData".

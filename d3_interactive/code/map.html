@@ -6,7 +6,7 @@
     <script src="https://cdn.bootcss.com/d3/3.5.17/d3.min.js"></script>
     <script src="https://cdn.bootcss.com/topojson/1.6.20/topojson.min.js"></script>
     <script src="https://cdn.bootcss.com/d3-queue/1.2.3/queue.min.js"></script>
-    <!-- <link rel="stylesheet" href="./mapstyle.css" /> -->
+    <link rel="stylesheet" href="./style.css" />
     <style>
       svg#svg2 {
         display: block;
@@ -110,19 +110,19 @@
       />
     </p>
     <script>
-      var width = 1200,
-        height = 900,
+      var width = 900,
+        height = 600,
         sens = 0.25,
         focused;
 
-      var margin = { top: 50, right: 100, bottom: 55, left: 100 },
+      var margin = { top: 30, right: 100, bottom: 50, left: 100 },
         width2 = width - 200 - margin.left - margin.right,
-        height2 = height - 700 - margin.top - margin.bottom + 50,
+        height2 = height - 500 - margin.top - margin.bottom + 50,
         padding = 50;
 
       var projection = d3.geo
         .orthographic()
-        .scale(350)
+        .scale(250)
         .rotate([0, 0])
         .translate([width / 2 - 100, height / 2])
         .clipAngle(90);
@@ -184,7 +184,7 @@
         .defer(d3.csv, './data/ged191.csv?=7')*/
         .defer(d3.json, 'https://raw.githubusercontent.com/sunyiyangallan/Conflict-Map/master/global.json')
         .defer(d3.tsv, 'https://raw.githubusercontent.com/sunyiyangallan/Conflict-Map/master/global-country.tsv')
-        .defer(d3.csv, 'https://raw.githubusercontent.com/sunyiyangallan/Conflict-Map/master/ged191.csv')
+        .defer(d3.csv, 'https://raw.githubusercontent.com/sunyiyangallan/Conflict-Map/master/df_d3.csv')
         .await(ready);
 
       var cnt = 0;
@@ -200,13 +200,29 @@
             .attr('stroke-width', 1)
             .attr('fill', '#EF5653')
             .attr('r', function() {
-              if (din.high > 0) {
-                return countScale(Math.log(din.high)) * 0.1;
+              if (din.best > 0) {
+                return countScale(Math.log(din.best)) * 0.1;
               } else {
                 return 0;
               }
             })
-            .attr('fill-opacity', '0.5');
+            // .attr('fill-opacity', '0.5')
+            .attr("opacity", function() {
+                var geoangle = d3.geo.distance(
+                        [din.longitude, din.latitude],
+                        [
+                            -projection.rotate()[0],
+                            projection.rotate()[1]
+
+                        ]);
+                // console.log(projection.rotate());
+                if (geoangle > 1.57079632679490)
+                {   
+                    return "0";
+                } else {
+                    return "1.0";
+                }
+              });
 
           function ping() {
             cnt += 1;
@@ -226,7 +242,7 @@
               .duration(3000)
               .attr({
                 fill: 'none',
-                r: countScale(din.high) * 5,
+                r: countScale(din.best) * 5,
                 stroke: '#EF5653',
                 'stroke-width': 0,
                 'stroke-opacity': 0,
@@ -245,13 +261,29 @@
             .attr('stroke-width', 1)
             .attr('fill', '#EF5653')
             .attr('r', function() {
-              if (d.high > 0) {
-                return countScale(Math.log(d.high)) * 0.1;
+              if (d.best > 0) {
+                return countScale(Math.log(d.best)) * 0.1;
               } else {
                 return 0;
               }
             })
-            .attr('fill-opacity', '0.5');
+            // .attr('fill-opacity', '0.5');
+            .attr("opacity", function() {
+                var geoangle = d3.geo.distance(
+                        [d.longitude, d.latitude],
+                        [
+                            -projection.rotate()[0],
+                            -projection.rotate()[1]
+                        ]);
+                //var r = d3.interpolate([d.longitude, d.latitude], [-p[0], p[1]]);
+                //geoangle = projection.rotate(r([d.longitude, d.latitude]));
+                if (geoangle > 1.57079632679490)
+                {   
+                    return "0";
+                } else {
+                    return "1.0";
+                }
+              });
         });
       }
 
@@ -271,7 +303,7 @@
           .rollup(function(leaves) {
             return {
               deaths: d3.sum(leaves, function(d) {
-                return Number(d.high);
+                return Number(d.best);
               }),
             };
           })
@@ -333,7 +365,7 @@
 
                 svg.selectAll('path.land').attr('d', path);
                 svg.selectAll('.focused').classed('focused', (focused = false));
-
+                // console.log(path)
                 moveCircle(thisYearConflict);
               }),
           )
@@ -533,7 +565,9 @@
             return conflictByCountry;
           }
 
-          var x = d3.scale.ordinal().rangeRoundBands([0, width2], 0.05);
+          var x = d3.scale.ordinal()
+                  .domain(d3.range(1989,2019,1))
+                  .rangeRoundBands([0, width2], 0.05);
 
           var y = d3.scale.linear().range([height2, 0]);
 
@@ -547,13 +581,13 @@
             .axis()
             .scale(y)
             .orient('left')
-            .ticks(10);
+            .ticks(5);
 
-          x.domain(
+          /*(
             conflictByCountry[0]['values'].map(function(d) {
               return d['key'];
             }),
-          );
+          );*/
           y.domain([
             0,
             d3.max(conflictByCountry[0]['values'], function(d) {
