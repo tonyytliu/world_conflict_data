@@ -1,3 +1,15 @@
+<h2 align="center"> The Analysis on World Armed Conflicts Data </h2>
+<h3 align="center">  STAT 5702 EDAV Final Project: Group 8 </h3>
+
+<p align="center"> Yitao Liu (yl4343), Boyu Liu (bl2788), Yiyang Sun (ys3284) </p>
+
+
+## Data Source
+UCDP Georeferenced Event Dataset (GED) Global version 19.1 [[source]](https://ucdp.uu.se/downloads/index.html#ged_global)
+
+## Link to Project Page
+https://tonyytliu.github.io/world_conflict_data/
+
 This is a template for the EDAV final project. It is based on the template created with *File, New Project..., New Directory, Book Project using bookdown* in RStudio. 
 
 ## ABSOLUTE ESSENTIALS
