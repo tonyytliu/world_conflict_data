@@ -13,7 +13,7 @@
   
   
   
-  
+  <meta name="github-repo" content="tonyytliu/EDAV_Project" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 3 Data transformation | World’s Armed Conflicts Data" />
@@ -76,6 +76,7 @@
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflict"><i class="fa fa-check"></i><b>5.1</b> Distribution of the number of deaths based on conflict</a></li>
 <li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> Relation between conflict and time</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#patterns-between-geographical-location-and-type-of-violence"><i class="fa fa-check"></i><b>5.3</b> Patterns between geographical location and type of violence</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
@@ -102,7 +103,7 @@
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
 <p>The dataset has a <code>.RData</code> version, which we can directly load using R, therefore, we do not have to worry much about reading the data into R. However, we would like to change the data class of several columns to fit our study better.</p>
 <p>In the original data, all columns with fully numeric values will be considered as “numeric.” For example, the column <code>year</code> would be considered as numeric, and we don’t need to transform it further. However, the <code>type_of_violence</code> column will also be considered as numeric, in which it should be categorical. Therefore, we change the 1, 2, and 3 values in <code>type_of_violence</code> to categories – “state-based conflict”, “non-state conflict”, and &quot; one-sided violence.&quot; Further, we would like to change the <code>date_start</code> and <code>date_end</code> to the DateTime class.</p>
-<p>The dataset we chose is very larger, to save the space, we would like to reduce the dataset only with columns we are might be interested in。 The following are the variables and their explanations. Explanations are referred from the codebook of the dataset [<a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">source</a>].</p>
+<p>The dataset we chose is very larger, to save the space, we would like to reduce the dataset only with columns we are might be interested in. The following are the variables and their explanations. Explanations are referred from the codebook of the dataset [<a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">source</a>].</p>
 <table>
 <thead>
 <tr class="header">

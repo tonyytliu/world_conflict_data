@@ -7,7 +7,7 @@ load(here("data", "clean", "WorldData.RData"))
 ```
 
 
-##  Distribution of the number of deaths based on conflict
+## Distribution of the number of deaths based on conflict
 ```{r, fig.width=10}
 df_process1<- df_process %>%
               mutate(best_in_1k = best/1000, 
@@ -141,7 +141,7 @@ Most conflict events are state-based conflict, i.e., the conflict involved with 
 
 If you are interested in the detailed and formal definition of these three types of conflict, please refer to this [source](https://ucdp.uu.se/downloads/ged/ged191.pdf), pp. 28-31.
 
-
+We want to check further how many civilians deaths each year, compare to the deaths of non-civilians caused by conflicts.
 
 ```{r, fig.width=10, fig.height=3.8}
 library(tidyverse)
@@ -233,4 +233,100 @@ df_3 <- head(ttt[order(-ttt$deaths_civilians),], 10)[c("id", "side_a", "side_b",
 knitr::kable(df_3)
 ```
 
+From the above plots, the top-left one, we can see that there are large civilians death in conflicts happened in 1994, which potentially because of the Rwanda genocide; after removing the records regarding the Rwanda genocide, the civilian deaths in 1994 was similar with other years. 
+
 The bottom two plots show the proportion of civilian deaths caused by conflicts, by comparing the left and right plots, we can see that the Rwanda genocide is the reason of leading extreme high proportion of civilian deaths.  In most of the years, the percentage of civilian deaths is around 25%, except in the year 1994 and the year 1996. After further checking, the reason for the high proportion of civilian deaths in 1996 is probably due to the [First Congo War](https://en.wikipedia.org/wiki/First_Congo_War).
+
+## Patterns between geographical location and type of violence
+Fristly, we want to briefly see the pattern between region and type of violence.
+```{r}
+p2 <- df_process %>% select(country,region,type_of_violence)
+
+m <- ggplot(p2)+
+  geom_mosaic(aes(x=product(type_of_violence,region),fill=type_of_violence,offset=0.02))+
+  ggtitle("Mosaic plot for type of violence in different regions")+
+  xlab("Regions")+
+  ylab("Type of violence")+
+  scale_fill_viridis_d()+
+  theme_classic() +
+  theme(axis.line = element_blank(),axis.ticks = element_blank(),legend.position = "none")+
+  theme(plot.title = element_text(face='bold',hjust=0.5))
+m
+
+m_2 <- ggplot(p2)+
+  geom_mosaic(aes(x=product(region,type_of_violence),fill=region,offset=0.02))+
+  ggtitle("Mosaic plot for regions in different types of violence")+
+  ylab("Regions")+
+  xlab("Type of violence")+
+  scale_fill_viridis_d()+
+  theme_classic() +
+  theme(axis.line = element_blank(),axis.ticks = element_blank(),legend.position = "none")+
+  theme(plot.title = element_text(face='bold',hjust=0.5))
+  
+m_2
+```
+
+
+After anaysis of relation between region and type of violence, we want to 
+```{r,fig.height=15}
+africa <- p2 %>% filter(region=="Africa")
+americas <- p2 %>% filter(region=="Americas")
+asia <- p2 %>% filter(region=="Asia")
+europe <- p2 %>% filter(region=="Europe")
+me <- p2 %>% filter(region=="Middle East")
+
+africa_new <- africa %>% group_by(country,type_of_violence) %>% summarise(Freq=n())
+africa_2 <- africa_new %>% group_by(country) %>% mutate(percent = Freq/sum(Freq)) %>% ungroup()
+b_1 <- ggplot(africa_2, aes(fill=type_of_violence, y=percent, x=country)) + 
+    geom_bar(position="stack", stat="identity")+
+    coord_flip()
+b_1
+
+americas_new <- americas %>% group_by(country,type_of_violence) %>% summarise(Freq=n())
+americas_2 <- americas_new %>% group_by(country) %>% mutate(percent = Freq/sum(Freq)) %>% ungroup()
+b_2 <- ggplot(americas_2, aes(fill=type_of_violence, y=percent, x=country)) + 
+    geom_bar(position="stack", stat="identity")+
+    coord_flip()
+b_2
+
+asia_new <- asia %>% group_by(country,type_of_violence) %>% summarise(Freq=n())
+asia_2 <- asia_new %>% group_by(country) %>% mutate(percent = Freq/sum(Freq)) %>% ungroup()
+b_3 <- ggplot(asia_2, aes(fill=type_of_violence, y=percent, x=country)) + 
+    geom_bar(position="stack", stat="identity")+
+    coord_flip()
+b_3
+
+europe_new <- europe %>% group_by(country,type_of_violence) %>% summarise(Freq=n())
+europe_2 <- europe_new %>% group_by(country) %>% mutate(percent = Freq/sum(Freq)) %>% ungroup()
+b_4 <- ggplot(europe_2, aes(fill=type_of_violence, y=percent, x=country)) + 
+    geom_bar(position="stack", stat="identity")+
+    coord_flip()
+b_4
+
+me_new <- me %>% group_by(country,type_of_violence) %>% summarise(Freq=n())
+me_2 <- me_new %>% group_by(country) %>% mutate(percent = Freq/sum(Freq)) %>% ungroup()
+b_5 <- ggplot(me_2, aes(fill=type_of_violence, y=percent, x=country)) + 
+    geom_bar(position="stack", stat="identity")+
+    coord_flip()
+b_5
+```
+
+
+We also plot
+```{r,fig.width=15,fig.height=7}
+temp6 <- df_process %>% filter(best>0) %>% arrange((best))
+ggplot() + 
+    geom_map(data = WorldData, map = WorldData,
+                  aes(map_id=region),
+                  fill = "white", colour = "gray", size=0.5) + 
+    geom_point(data=temp6, aes(x=longitude, y=latitude, color=type_of_violence),
+               size=0.5, alpha=0.2) +
+    coord_map("rectangular", lat0=0, xlim=c(-180,180), ylim=c(-60, 90)) +
+    labs(fill="legend", title="Total fatalities caused by conflict event",
+         subtitle="based on countries/regions", 
+         x="", y="") +
+    scale_color_viridis_d()+
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks.x = element_blank(),axis.ticks.y = element_blank())
+
+```
+

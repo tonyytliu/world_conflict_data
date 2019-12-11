@@ -1,22 +1,10 @@
 # Data transformation
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE, fig.align='center')
-library(dplyr)
-library(here)
-library(ggplot2)
-library(ggpubr)
-library(mapproj)
-library(scales)
-library(naniar)
-library(extracat)
-```
-
 The dataset has a `.RData` version, which we can directly load using R, therefore, we do not have to worry much about reading the data into R. However, we would like to change the data class of several columns to fit our study better.
 
 In the original data, all columns with fully numeric values will be considered as "numeric." For example, the column `year` would be considered as numeric, and we don't need to transform it further. However, the `type_of_violence` column will also be considered as numeric, in which it should be categorical. Therefore, we change the 1, 2, and 3 values in `type_of_violence` to categories -- "state-based conflict", "non-state conflict", and " one-sided violence." Further, we would like to change the `date_start` and `date_end` to the DateTime class.
 
-The dataset we chose is very larger, to save the space, we would like to reduce the dataset only with columns we are might be interested in。 The following are the variables and their explanations. Explanations are referred from the codebook of the dataset [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf)].
+The dataset we chose is very larger, to save the space, we would like to reduce the dataset only with columns we are might be interested in. The following are the variables and their explanations. Explanations are referred from the codebook of the dataset [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf)].
 ```{r echo= FALSE, results= 'asis'}
 var_ex = data.frame(
   Variable = c("id",

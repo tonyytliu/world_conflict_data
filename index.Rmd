@@ -3,7 +3,23 @@ title: "World's Armed Conflicts Data"
 author: "Yitao Liu (yl4343), Boyu Liu (bl2788), Yiyang Sun (ys3284)"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+github-repo: tonyytliu/EDAV_Project
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE, fig.align='center')
+library(dplyr)
+library(here)
+library(ggplot2)
+library(ggpubr)
+library(mapproj)
+library(scales)
+library(naniar)
+library(extracat)
+library(ggmosaic)
+```
 
 # Introduction
 

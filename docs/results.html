@@ -13,7 +13,7 @@
   
   
   
-  
+  <meta name="github-repo" content="tonyytliu/EDAV_Project" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 5 Results | World’s Armed Conflicts Data" />
@@ -76,6 +76,7 @@
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflict"><i class="fa fa-check"></i><b>5.1</b> Distribution of the number of deaths based on conflict</a></li>
 <li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> Relation between conflict and time</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#patterns-between-geographical-location-and-type-of-violence"><i class="fa fa-check"></i><b>5.3</b> Patterns between geographical location and type of violence</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
@@ -211,6 +212,7 @@
 <p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>Most conflict events are state-based conflict, i.e., the conflict involved with “[a] government of a state or any opposition organization or alliance of organizations” [<a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">source</a>, pp.28-29], which is higher in number comparing to the other two types of conflict. Before 2018, there are more one-side conflicts (against civilians) than non-state conflicts (between two armed groups). But in 2018, there are more non-state conflicts compare to one-side conflict.</p>
 <p>If you are interested in the detailed and formal definition of these three types of conflict, please refer to this <a href="https://ucdp.uu.se/downloads/ged/ged191.pdf">source</a>, pp. 28-31.</p>
+<p>We want to check further how many civilians deaths each year, compare to the deaths of non-civilians caused by conflicts.</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="960" style="display: block; margin: auto;" /></p>
 <table>
@@ -318,7 +320,17 @@
 </tr>
 </tbody>
 </table>
+<p>From the above plots, the top-left one, we can see that there are large civilians death in conflicts happened in 1994, which potentially because of the Rwanda genocide; after removing the records regarding the Rwanda genocide, the civilian deaths in 1994 was similar with other years.</p>
 <p>The bottom two plots show the proportion of civilian deaths caused by conflicts, by comparing the left and right plots, we can see that the Rwanda genocide is the reason of leading extreme high proportion of civilian deaths. In most of the years, the percentage of civilian deaths is around 25%, except in the year 1994 and the year 1996. After further checking, the reason for the high proportion of civilian deaths in 1996 is probably due to the <a href="https://en.wikipedia.org/wiki/First_Congo_War">First Congo War</a>.</p>
+</div>
+<div id="patterns-between-geographical-location-and-type-of-violence" class="section level2">
+<h2><span class="header-section-number">5.3</span> Patterns between geographical location and type of violence</h2>
+<p>Fristly, we want to briefly see the pattern between region and type of violence.
+<img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/unnamed-chunk-22-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>After anaysis of relation between region and type of violence, we want to
+<img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/unnamed-chunk-23-2.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/unnamed-chunk-23-3.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/unnamed-chunk-23-4.png" width="672" style="display: block; margin: auto;" /><img src="_main_files/figure-html/unnamed-chunk-23-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We also plot
+<img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="1440" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
