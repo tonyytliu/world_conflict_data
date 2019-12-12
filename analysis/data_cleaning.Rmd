@@ -1,0 +1,134 @@
+# Data transformation
+
+The dataset has a `.RData` version, which we can directly load using R, therefore, we do not have to worry much about reading the data into R. However, we would like to change the data class of several columns to fit our study better.
+
+In the original data, all columns with fully numeric values will be considered as "numeric." For example, the column `year` would be considered as numeric, and we don't need to transform it further. However, the `type_of_violence` column will also be considered as numeric, in which it should be categorical. Therefore, we change the 1, 2, and 3 values in `type_of_violence` to categories -- "state-based conflict", "non-state conflict", and " one-sided violence." Further, we would like to change the `date_start` and `date_end` to the DateTime class.
+
+The dataset we chose is very larger, to save the space, we would like to reduce the dataset only with columns we are might be interested in (as described in Chapter 2). The transformed dataset is stored in "data/clean/df_process.RData". But in certain instances, we may want to use the original dataset (for example, missing value analysis).
+
+```{r}
+load(here("data", "raw", "ged191.RData"))
+df_process <- ged191 %>%
+              mutate(date_start = as.Date(date_start),
+                     date_end = as.Date(date_end),
+                     type_of_violence = ifelse(type_of_violence == 1, "state-based conflict",
+                                               ifelse(type_of_violence == 2, "non-state conflict", "one-side violence"))) %>%
+              select(id, date_start, date_end, year, type_of_violence,
+                     side_a, side_b, longitude, latitude, country, region, deaths_a,
+                     deaths_b, deaths_civilians, best, low, high)
+# save the data to the cleaning data
+save(df_process, file = here("data", "clean", "df_process.RData"))
+```
+
+In our study, we find the most extreme values of this dataset are related to the [Rwanda genocide](https://en.wikipedia.org/wiki/Rwandan_genocide){target="_blank"} in 1994, which we will have detailed explanations in the following chapters. Sometimes, we need to include these records in our analysis, and sometimes we don't. Therefore, we decide to have a data frame to record the unique conflict event ID of records related to the Rwanda genocide. Then we can quickly include and filter our these records in our future coding. The data frame is stored as "data/clean/df_rwa.RData".
+
+For other transformations made for analysis and visualization, please refer to our code on GitHub [repo](https://github.com/tonyytliu/world_conflict_data){target="_blank"}.
+
+```{r}
+# get conflicts related with the Rwanda genocide, between 1994-04-01 and 1994-07-31
+df_rwa <- df_process %>%
+          filter(side_a == "Government of Rwanda",
+                 side_b == "Civilians",
+                 date_end <= as.Date("1994-07-31"),
+                 date_start >= as.Date("1994-04-01")) %>%
+          select(id)
+save(df_rwa, file = here("data", "clean", "df_rwa.RData"))
+```
+
+In our project, we would also like to investigate the geographic or spatial pattern of the data via the D3 interactive plot. However, some countries/regions' names in the D3's geo-map (list of countries are in "data/raw/global-country.tsv") are different from what we have in the dataset. For the data used in D3, we need to change the country names to make them identical to those in D3's geo-map. The following countries/regions have different names. The modified data file is stored as "data/clean/df_d3.csv".
+
+```{r echo= FALSE, results= 'asis'}
+county_name = data.frame(
+  in_dataset = c("Russia (Soviet Union)",
+                   "Yemen (North Yemen)",
+                   "Myanmar (Burma)",
+                   "Cambodia (Kampuchea)",
+                   "Ivory Coast",
+                   "Zimbabwe (Rhodesia)",
+                   "Serbia (Yugoslavia)",
+                   "Macedonia, FYR",
+                   "Kingdom of eSwatini (Swaziland)",
+                   "Rumania",
+                   "United States of America",
+                   "Madagascar (Malagasy)",
+                   "DR Congo (Zaire)",
+                   "China"
+               ),
+  in_d3_geo =c("Russia",
+               "Yemen",
+               "Myanmar",
+               "Cambodia",
+               "Cote d'Ivoire",
+               "Zimbabwe",
+               "Serbia",
+               "Macedonia",
+               "Swaziland",
+               "Romania",
+               "United States",
+               "Madagascar",
+               "DR Congo",
+               "China, Mainland"
+                 ) )
+kable(county_name)
+```
+
+```{r}
+d3_country <- read.delim(here("data", "raw","global-country.tsv"))
+df_d3 = df_process %>%
+        select(id, country, year, best, longitude, latitude)
+```
+
+```{r}
+a <- setNames(as.data.frame(unique(df_d3$country)), "country")
+a$country2 = a$country
+
+b <- setNames(as.data.frame(unique(d3_country$name)), "name")
+b$name2 = b$name
+
+temp4 <- full_join(a, b, by = c("country" = "name"))
+
+
+df_d3$country <-plyr::mapvalues(df_d3$country, 
+            from=c("Russia (Soviet Union)",
+                   "Yemen (North Yemen)",
+                   "Myanmar (Burma)",
+                   "Cambodia (Kampuchea)",
+                   "Ivory Coast",
+                   "Zimbabwe (Rhodesia)",
+                   "Serbia (Yugoslavia)",
+                   "Macedonia, FYR",
+                   "Kingdom of eSwatini (Swaziland)",
+                   "Rumania",
+                   "United States of America",
+                   "Madagascar (Malagasy)",
+                   "DR Congo (Zaire)",
+                   "China"
+               ),
+          to=c("Russia",
+               "Yemen",
+               "Myanmar",
+               "Cambodia",
+               "Cote d'Ivoire",
+               "Zimbabwe",
+               "Serbia",
+               "Macedonia",
+               "Swaziland",
+               "Romania",
+               "United States",
+               "Madagascar",
+               "DR Congo",
+               "China, Mainland"
+                 ) 
+          )
+
+a <- setNames(as.data.frame(unique(df_d3$country)), "country")
+a$country2 = a$country
+
+b <- setNames(as.data.frame(unique(d3_country$name)), "name")
+b$name2 = b$name
+
+temp5 <- full_join(a, b, by = c("country" = "name"))
+
+write.csv(df_d3, file = here("data", "clean", "df_d3.csv"))
+```
+
