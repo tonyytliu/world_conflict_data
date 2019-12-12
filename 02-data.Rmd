@@ -1,6 +1,6 @@
 # Data sources
 
-UCDP Georeferenced Event Dataset (GED) Global version 19.1 from UCDP Dataset (https://ucdp.uu.se/downloads/index.html#ged_global){target="_blank"} is used in our project, this dataset covers "individual events of organized violence (phenomena of lethal violence occurring at a given time and place)" in a world-wide perspective [[source](https://ucdp.uu.se/downloads/index.html#ged_global){target="_blank"}].
+UCDP Georeferenced Event Dataset (GED) Global version 19.1 from UCDP Dataset (https://ucdp.uu.se/downloads/index.html#ged_global) is used in our project, this dataset covers "individual events of organized violence (phenomena of lethal violence occurring at a given time and place)" in a world-wide perspective [[source](https://ucdp.uu.se/downloads/index.html#ged_global){target="_blank"}].
 
 There are 152,616 records in the dataset, and each record in the dataset is an event of a specific conflict. An event of a conflict is defined as "An incident where armed force was used by an organized actor against another organized actor, or against civilians." [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}]. 
 
