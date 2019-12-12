@@ -390,7 +390,7 @@ From the Choropleth map above, we can re-verify our finding before, it is easy t
 
 Besides what we find before, we can still see a lot of patterns between countries and type of violence. Because of numerous patterns and large number of conflicts, we will only choose some of them to discuss.
 
-Especially, there are a lot of state-based conflicts in Philippines, as we can see from the graph. This is known as Communist rebellion in the Philippines. It is an ongoing conflict between the Government of the Philippines and the communist coalition of the Communist Party of the Philippines(CPP) from 1969 to present. The long-lasting conflict betweem them can be divided into numerous small conflict which are shown in the map. We can use statistical method to see if our finding is true.
+Especially, there are a lot of state-based conflicts in Philippines, as we can see from the graph. This is known as Communist rebellion in the Philippines. It is an ongoing conflict between the Government of the Philippines and the communist coalition of the Communist Party of the Philippines(CPP) from 1969 to present. The long-lasting conflict betweem them can be divided into numerous small conflicts which are shown in the map. We can use statistical method to see if our finding is true.
 ```{r,fig.width=8}
 ph <- df_process %>% filter(country=="Philippines"&type_of_violence=="state-based conflict")
 ph_2 <- ph %>% group_by(side_b) %>%summarise(no_rows = length(side_b))
