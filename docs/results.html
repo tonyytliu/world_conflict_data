@@ -74,7 +74,7 @@
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a><ul>
-<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflict"><i class="fa fa-check"></i><b>5.1</b> Distribution of the number of deaths based on conflict</a></li>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#distribution-of-the-number-of-deaths-based-on-conflicts"><i class="fa fa-check"></i><b>5.1</b> Distribution of the number of deaths based on conflicts</a></li>
 <li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#relation-between-conflict-and-time"><i class="fa fa-check"></i><b>5.2</b> Relation between conflict and time</a></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#patterns-between-geographical-location-and-type-of-violence"><i class="fa fa-check"></i><b>5.3</b> Patterns between geographical location and type of violence</a></li>
 </ul></li>
@@ -104,12 +104,12 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
-<div id="distribution-of-the-number-of-deaths-based-on-conflict" class="section level2">
-<h2><span class="header-section-number">5.1</span> Distribution of the number of deaths based on conflict</h2>
+<div id="distribution-of-the-number-of-deaths-based-on-conflicts" class="section level2">
+<h2><span class="header-section-number">5.1</span> Distribution of the number of deaths based on conflicts</h2>
 <p><img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/docs/_main_files/figure-html/unnamed-chunk-13-1.png" width="960" style="display: block; margin: auto;" /></p>
-<p>As shown in the top-left plot, the dataset is highly skewed and imbalanced. When we focus on the data with death less than 100 people, we can see the data are more concentrated in &lt;20 regions. Most conflict events have less than five deaths.</p>
+<p>As shown in the top-left plot, the dataset is highly skewed and imbalanced. When we focus on the data with death less than 100 people, we can see the data are more concentrated in &lt;20 regions. Most conflicts have less than five deaths.</p>
 <p><img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/docs/_main_files/figure-html/unnamed-chunk-14-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>The above Cleveland plot shows top conflict events which caused most deaths (<span class="math inline">\(\geq\)</span> 5,000), there is a conflict event happened in Rwanda caused approximately 300,000 deaths, which is much more than other conflicts event. Also, most of those events causing significant fatalities were taken place in Rwanda.</p>
+<p>The above Cleveland plot shows top conflicts which caused most deaths (<span class="math inline">\(\geq\)</span> 5,000), there is a conflict happened in Rwanda caused approximately 300,000 deaths, which is much more than other conflicts. Also, most of the conflicts causing significant fatalities were taken place in Rwanda.</p>
 <table>
 <thead>
 <tr class="header">
@@ -204,16 +204,16 @@
 </tr>
 </tbody>
 </table>
-<p>After an investigation of those conflict events, we found out most of them are between the Government of Rewanda and civilians, which was related to the <a href="https://en.wikipedia.org/wiki/Rwandan_genocide" target="_blank">Rwanda genocide</a> in 1994.</p>
+<p>After an investigation of those conflicts, we found out most of them are between the Government of Rewanda and civilians, which was related to the <a href="https://en.wikipedia.org/wiki/Rwandan_genocide" target="_blank">Rwanda genocide</a> in 1994.</p>
 </div>
 <div id="relation-between-conflict-and-time" class="section level2">
 <h2><span class="header-section-number">5.2</span> Relation between conflict and time</h2>
 <p><img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/docs/_main_files/figure-html/unnamed-chunk-16-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>As shown in the bar chart, the number of conflict events that occur in each year tends to increase from 1998 to 2018. The number of conflicts is lowest in 1997.</p>
+<p>As shown in the bar chart, the number of conflicts that occur in each year tends to increase from 1998 to 2018. The number of conflicts is lowest in 1997.</p>
 <p><img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/docs/_main_files/figure-html/unnamed-chunk-18-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>The conflict-caused deaths are extremely high in 1994, as shown in the left plot. As mentioned in the previous point, a high number of deaths were probably related to the Rwanda genocide. When we filter out the data related to the Rwanda genocide, we get the plot on the right. The conflict-caused death per year decreased from 1989 until 2005, after 2005, the number tends to increase.</p>
 <p><img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/docs/_main_files/figure-html/unnamed-chunk-19-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>Most conflict events are state-based conflict, i.e., the conflict involved with “[a] government of a state or any opposition organization or alliance of organizations” [<a href="https://ucdp.uu.se/downloads/ged/ged191.pdf" target="_blank">source</a>, pp.28-29], which is higher in number comparing to the other two types of conflict. Before 2018, there are more one-side conflicts (against civilians) than non-state conflicts (between two armed groups). But in 2018, there are more non-state conflicts compare to one-side conflict.</p>
+<p>Most conflicts are state-based conflict, i.e., the conflict involved with “[a] government of a state or any opposition organization or alliance of organizations” [<a href="https://ucdp.uu.se/downloads/ged/ged191.pdf" target="_blank">source</a>, pp.28-29], which is higher in number comparing to the other two types of conflict. Before 2018, there are more one-side conflicts (against civilians) than non-state conflicts (between two armed groups). But in 2018, there are more non-state conflicts compare to one-side conflict.</p>
 <p>If you are interested in the detailed and formal definition of these three types of conflict, please refer to this <a href="https://ucdp.uu.se/downloads/ged/ged191.pdf" target="_blank">source</a>, pp. 28-31.</p>
 <p>We want to check further how many civilians deaths each year, compare to the deaths of non-civilians caused by conflicts.</p>
 <p><img src="https://raw.githubusercontent.com/tonyytliu/world_conflict_data/master/docs/_main_files/figure-html/unnamed-chunk-20-1.png" width="960" style="display: block; margin: auto;" /></p>

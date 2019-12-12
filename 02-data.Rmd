@@ -4,7 +4,7 @@ UCDP Georeferenced Event Dataset (GED) Global version 19.1 from UCDP Dataset (ht
 
 There are 152,616 records in the dataset, and each record in the dataset is an event of a specific conflict. An event of a conflict is defined as "An incident where armed force was used by an organized actor against another organized actor, or against civilians." [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}]. 
 
-To avoid potential ambiguities, "conflict event" is used in our project to express the term "event" in the original terminology. This dataset contains data of armed conflict events from a world-wide perspective, from 1989 to 2018; includes the time, geographic location, type, casualties, and other information regarding the conflict event. 
+We simply use the term "conflict" in our project to express "event of a conflict" or "event" in the original terminology. This dataset contains data of armed conflict events from a world-wide perspective, from 1989 to 2018; includes the time, geographic location, type, casualties, and other information regarding the conflict event. 
 
 There are a total of 43 variables in the original dataset, and for the full definitions and explanations of variables, please refer to the dataset's codebook [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}]. However, there are some repeated variables. For example, there are several variables to represent the geo-location of one conflict event, they refer to the same location, but in different formats to suit different geographic databases. In our study, for the location variables, we are only interested in the vanilla `latitude` and `longitude` variables.
 
@@ -25,10 +25,10 @@ var_ex = data.frame(
                "death_*",
                "best",
                "high/low"),
-  Explanation = c("An unique ID identifying a conflict event",
-                "The earliest possible date when the conflict event has taken place",
-                "The last possible date when the conflict event has taken place",
-                "The year of the conflict event",
+  Explanation = c("An unique ID identifying an event of the conflict",
+                "The earliest possible date when the conflict has taken place",
+                "The last possible date when the conflict has taken place",
+                "The year of the conflict happened",
                 "1: state-based conflict (involved with a government of a state or any opposition organization or alliance of organizations); 2: non-state conflict (between organized armed groups); 3: one-sided violence (against civilians)",
                 "The name of the two sides",
                 "Best estimated or the actual location of the conflict event takes place",

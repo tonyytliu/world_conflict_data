@@ -9,7 +9,7 @@ WorldData <- map_data('world') %>% filter(region != "Antarctica") %>% fortify
 ```
 
 
-## Distribution of the number of deaths based on conflict
+## Distribution of the number of deaths based on conflicts
 ```{r, fig.width=10}
 df_process1<- df_process %>%
               mutate(best_in_1k = best/1000, 
@@ -17,7 +17,7 @@ df_process1<- df_process %>%
 g1 <- ggplot(df_process1, aes(x = best_in_1k)) + 
         geom_histogram(bins = 20, colour = "#80593D", fill = "steelblue") +
         scale_x_continuous(breaks= pretty_breaks()) +
-        ggtitle("Distribution of deaths caused by conflict events") +
+        ggtitle("Distribution of the number of deaths caused by conflicts") +
         labs(x="Best estimated deaths, in thousands (1,000) of deaths")+
         theme(plot.title = element_text(face='bold',hjust=0.5),
               plot.subtitle = element_text(hjust=0.5))
@@ -27,7 +27,7 @@ df_process2 <- df_process %>%
 g2<- ggplot(df_process2, aes(x = best)) + 
         geom_histogram(bins = 100, colour = "#80593D", fill = "steelblue") +
         scale_x_continuous(breaks= pretty_breaks()) +
-        ggtitle("Distribution of conflicts deaths caused by conflict events",
+        ggtitle("Distribution of the number of deaths caused by conflicts",
                 subtitle = "with death < 100") +
         labs(x="Best estimated deaths")+
         theme(plot.title = element_text(face='bold',hjust=0.5),
@@ -38,7 +38,7 @@ df_process3 <- df_process %>%
 g3<- ggplot(df_process3, aes(x = best)) + 
         geom_histogram(bins = 20, colour = "#80593D", fill = "steelblue") +
         scale_x_continuous(breaks= pretty_breaks()) +
-        ggtitle("Distribution of conflicts deaths caused by conflict events",
+        ggtitle("Distribution of the number of deaths caused by conflicts",
                 subtitle = "with death < 20") +
         labs(x="Best estimated deaths")+
         theme(plot.title = element_text(face='bold',hjust=0.5),
@@ -51,7 +51,7 @@ df_process4<- df_process %>%
 g4<- ggplot(df_process4, aes(x = best_in_1k)) + 
         geom_histogram(bins = 20, colour = "#80593D", fill = "steelblue", boundary=10000) +
         scale_x_continuous(breaks= pretty_breaks()) +
-        ggtitle("Distribution of conflicts deaths caused by conflict events",
+        ggtitle("Distribution of the number of deaths caused by conflicts",
                 subtitle = "with death >= 10,000") +
         labs(x="Best estimated deaths, in thousands (1,000) of deaths")+
         theme(plot.title = element_text(face='bold',hjust=0.5),
@@ -60,7 +60,7 @@ g4<- ggplot(df_process4, aes(x = best_in_1k)) +
 ggarrange(g1, g2, g3, g4, ncol = 2, nrow = 2)
 ```
 
-As shown in the top-left plot, the dataset is highly skewed and imbalanced.  When we focus on the data with death less than 100 people, we can see the data are more concentrated in <20 regions. Most conflict events have less than five deaths.
+As shown in the top-left plot, the dataset is highly skewed and imbalanced.  When we focus on the data with death less than 100 people, we can see the data are more concentrated in <20 regions. Most conflicts have less than five deaths.
 
 
 ```{r, fig.width=8}
@@ -74,11 +74,11 @@ ggplot(df_process5, aes(x = best_in_1k, y = reorder(name, best))) +
       geom_point(color = "steelblue") +
       labs(x="Best estimated deaths, in thousands (1,000) of deaths",
            y="Confict Event ID: Country") + 
-      ggtitle("Confict events causing most deaths")+
+      ggtitle("Conficts that causing most deaths")+
         theme(plot.title = element_text(face='bold',hjust=0.5))
 ```
 
-The above Cleveland plot shows top conflict events which caused most deaths ($\geq$ 5,000), there is a conflict event happened in Rwanda caused approximately 300,000 deaths, which is much more than other conflicts event. Also, most of those events causing significant fatalities were taken place in Rwanda. 
+The above Cleveland plot shows top conflicts which caused most deaths ($\geq$ 5,000), there is a conflict happened in Rwanda caused approximately 300,000 deaths, which is much more than other conflicts. Also, most of the conflicts causing significant fatalities were taken place in Rwanda. 
 
 ```{r}
 # The conflict with largest death
@@ -86,7 +86,7 @@ df_2<- head(df_process[order(-df_process$best),], 10)[c("id", "side_a", "side_b"
 knitr::kable(df_2)
 ```
 
-After an investigation of those conflict events, we found out most of them are between the Government of Rewanda and civilians, which was related to the [Rwanda genocide](https://en.wikipedia.org/wiki/Rwandan_genocide){target="_blank"} in 1994.
+After an investigation of those conflicts, we found out most of them are between the Government of Rewanda and civilians, which was related to the [Rwanda genocide](https://en.wikipedia.org/wiki/Rwandan_genocide){target="_blank"} in 1994.
 
 
 ## Relation between conflict and time
@@ -97,13 +97,13 @@ df_count <- df_process %>%
             tally()
 ggplot(df_count, aes(x = year, y = n)) +
       geom_bar(stat = "identity", fill = "steelblue") +
-      ggtitle("Number of conflict events based on year") +
-      labs(y = "number of conflict events") +
+      ggtitle("Number of conflicts based on year") +
+      labs(y = "number of conflict") +
       scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1))+
         theme(plot.title = element_text(face='bold',hjust=0.5))
 ```
 
-As shown in the bar chart, the number of conflict events that occur in each year tends to increase from 1998 to 2018. The number of conflicts is lowest in 1997.
+As shown in the bar chart, the number of conflicts that occur in each year tends to increase from 1998 to 2018. The number of conflicts is lowest in 1997.
 
 ```{r}
 # get conflicts' deaths by year
@@ -149,14 +149,14 @@ df_type <- df_process %>%
 ggplot(df_type, aes(fill=type_of_violence, x=year, y=n)) + 
     geom_bar(position="dodge", stat="identity") + 
     theme(legend.position='bottom') +
-    labs(x="year", y="number of conflict events", fill="violence type") + 
-    ggtitle("Number of conflict events based on year and type") +
+    labs(x="year", y="number of conflicts", fill="violence type") + 
+    ggtitle("Number of conflicts based on year and type") +
     scale_fill_viridis_d()+
     scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1)) +
         theme(plot.title = element_text(face='bold',hjust=0.5))
 ```
 
-Most conflict events are state-based conflict, i.e., the conflict involved with "[a] government of a state or any opposition organization or alliance of organizations" [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}, pp.28-29], which is higher in number comparing to the other two types of conflict. Before 2018, there are more one-side conflicts (against civilians) than non-state conflicts (between two armed groups).  But in 2018, there are more non-state conflicts compare to one-side conflict. 
+Most conflicts are state-based conflict, i.e., the conflict involved with "[a] government of a state or any opposition organization or alliance of organizations" [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}, pp.28-29], which is higher in number comparing to the other two types of conflict. Before 2018, there are more one-side conflicts (against civilians) than non-state conflicts (between two armed groups).  But in 2018, there are more non-state conflicts compare to one-side conflict. 
 
 If you are interested in the detailed and formal definition of these three types of conflict, please refer to this [source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}, pp. 28-31.
 
