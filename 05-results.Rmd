@@ -337,14 +337,14 @@ m
 
 From the mosaic plot above, the percentages of one-side violence and non-state conflict are both lower than percentage of state-based conflict. State-based conflict are the most frequent type of violence among all regions, as state-based conflict is the most conventional and common among all types of violence, which is conflict between two legitimate players, namely state actors or the governments of the states. State-based conflict is a very common type of violence around the world. 
 
-Moreover, compared with Asia, Europe and Middle East, Africa and American have more percentage of non-state conflict. For Africa, there are a lot of private military companies and especially, terrorist organizations, such as Islamic State (also known as ISIS) in Libya, Boko Haram in Nigeria and al Shabab in Somalia. These military companies and terrorist organizations are senseless and they used extremely brutal method, such as suicide bombing, to hurt innocent civilians in Africa. For Americas, the reason why the percentage of non-state conflict is so high is that, in South America and Mexico, there are so many drug cartels which is the criminal organization with intention of supplying drug trafficking operations. There are always conflicts between different drug cartels.
+Moreover, compared with Asia, Europe and Middle East, Africa and American have more percentage of non-state conflict. For Africa, there are a lot of private military companies and especially, terrorist organizations, such as, Boko Haram in Nigeria and al Shabab in Somalia. These military companies and terrorist organizations are senseless and they used extremely brutal method, such as suicide bombing, to hurt innocent civilians in Africa. For Americas, the reason why the percentage of non-state conflict is so high is that, in South America and Mexico, there are so many drug cartels which is the criminal organization with intention of supplying drug trafficking operations. There are always conflicts between different drug cartels.
 
 In addition, in the graph, the total area of Africa and total area of Asia are much larger than those of Americas, Europe and Middle East, which shows that the total numbers of conflicts in Africa and Asia are greater. For Africa, as we discussed before, the terrorist organizations and private military companies are the fundational cause of such large number of conflict. However, in Asia, the reason why the number of conflict is so high remains unclear. We need to create a separate bar chart for country in Asia to see what happened.
 
 ```{r,fig.width=10, fig.height=7}
 as <- p2 %>% filter(region=="Asia")
 as_new <- as %>% group_by(country,type_of_violence) %>% summarise(Freq=n())
-a_3 <- ggplot(as_new, aes(fill=type_of_violence, y=Freq, x=country)) + 
+a_3 <- ggplot(as_new, aes(fill=type_of_violence, y=Freq, x=reorder(country, Freq))) + 
     geom_bar(position="stack", stat="identity")+
     scale_fill_viridis_d()+
     ggtitle("Stack bar chart for regions in Asia",
@@ -366,7 +366,7 @@ a_3
 
 ```
 
-As we can see from the graph above, in Asia, Afghanistan has a extrmemely large number of conflicts happened, and most of these conflicts are state-based conflict. War in Afghanistan is well-known around the world. US government engaged into War in Afghanistan to wipe out Taliban government because the Taliban government refused to hand over terrorist leader Osama bin Laden in the wake of al-Qaeda’s September 11, 2001. In Afghanistan, most conflicts are state-based conflicts, which are conflicts between US and Taliban government. The war had last for eighteen years and obviously, numerous of conflicts happened during 18 years. Now we know that war in Afghanistan from 2001 till now causes relatively high total number of conflicts in Asia.
+As we can see from the graph above, in Asia, Afghanistan has a extrmemely large number of conflicts happened, and most of these conflicts are state-based conflict. [War in Afghanistan](https://en.wikipedia.org/wiki/War_in_Afghanistan_(2001–present)){target="_blank"} is well-known around the world. US government engaged into War in Afghanistan to wipe out Taliban government because the Taliban government refused to hand over terrorist leader Osama bin Laden in the wake of al-Qaeda’s September 11, 2001. In Afghanistan, most conflicts are state-based conflicts, which are conflicts between US and Taliban government. The war had last for eighteen years and obviously, numerous of conflicts happened during 18 years. Now we know that war in Afghanistan from 2001 till now causes relatively high total number of conflicts in Asia.
 
 After anaysis of relation between region and type of violence, we want to explore more deeply to countries in different representative countries , just as we analysis the Afghanistan above. We decide to use the best way to explore spatial patterns which is to create a Choropleth plot to see distribution of different type of violence for each country among the world.
 
@@ -390,7 +390,7 @@ From the Choropleth map above, we can re-verify our finding before, it is easy t
 
 Besides what we find before, we can still see a lot of patterns between countries and type of violence. Because of numerous patterns and large number of conflicts, we will only choose some of them to discuss.
 
-Especially, there are a lot of state-based conflicts in Philippines, as we can see from the graph. This is known as Communist rebellion in the Philippines. It is an ongoing conflict between the Government of the Philippines and the communist coalition of the Communist Party of the Philippines(CPP) from 1969 to present. The long-lasting conflict betweem them can be divided into numerous small conflicts which are shown in the map. We can use statistical method to see if our finding is true.
+Especially, there are a lot of state-based conflicts in Philippines, as we can see from the graph. This is known as [Communist rebellion in the Philippines](https://en.wikipedia.org/wiki/Communist_rebellion_in_the_Philippines){target="_blank"}. It is an ongoing conflict between the Government of the Philippines and the communist coalition of the Communist Party of the Philippines (CPP) from 1969 to present. The long-lasting conflict betweem them can be divided into numerous small conflicts which are shown in the map. We can use statistical method to see if our finding is true.
 ```{r,fig.width=8}
 ph <- df_process %>% filter(country=="Philippines"&type_of_violence=="state-based conflict")
 ph_2 <- ph %>% group_by(side_b) %>%summarise(no_rows = length(side_b))
@@ -398,7 +398,7 @@ ph_2 <- ph_2 %>%
           mutate(side_b=replace(side_b, side_b=="Military faction (forces of Honasan, Abenina & Zumel)", "Military faction\n (Honasan, Abenina & Zumel)"))
 
 
-ggplot(ph_2,aes(x=side_b,y=no_rows))+
+ggplot(ph_2,aes(x=reorder(side_b, no_rows),y=no_rows))+
   geom_bar(stat = "identity", fill = "steelblue")+
   labs(x="Side b",y="Frequency of state-based conflict",title="State-based conflict happened in Philippines")+
   theme_grey(12)+
@@ -424,7 +424,7 @@ print(b)
 ```
 From the lists of two sides in non-state conflicts in Mexico, we can see that the non-state conflicts are mostly caused by fights between drug cartels.
 
-In addition, for Peru in south america, there are a lot of yellow dots which represent state-based conflicts. It represents the internal war in Peru between the Government of Peru and the Communist Party of Peru-Shining Path/Túpac Amaru Revolutionary Movement(MRTA). The internal war of Peru last for 20 years. Then, we also filter the orginal dataset to see if our finding is true.
+In addition, for Peru in south america, there are a lot of yellow dots which represent state-based conflicts. It represents the [internal war in Peru](https://en.wikipedia.org/wiki/Internal_conflict_in_Peru){target="_blank"} between the Government of Peru and the Communist Party of Peru-Shining Path/Túpac Amaru Revolutionary Movement (MRTA). The internal war of Peru last for 20 years. Then, we also filter the orginal dataset to see if our finding is true.
 ```{r, fig.height=3}
 pe <- df_process %>% filter(country=="Peru"&type_of_violence=="state-based conflict")
 pe_2 <- pe %>% group_by(side_b) %>%summarise(no_rows = length(side_b))
