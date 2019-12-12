@@ -2,15 +2,16 @@
 
 ## Link to the interactive plot
 
-Click [here](https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1/) or copy the url: https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1/
+Click [here](https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/) or copy the url: https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/
+
+It may take some times to load the plot. 
 
 ## Descriptions
+
 This is the interactive part of our conflict anaylsis. 
-We store the data in the github repo (https://github.com/sunyiyangallan/Conflict-Map), the cleaned up that file and get df_d3.csv using R (as mentioned in the previous chapters).
+We store the data in the github [repo](https://github.com/sunyiyangallan/Conflict-Map), the cleaned up that file and get df_d3.csv using R (as mentioned in the previous chapters).
 
-Please click [this link](https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1/) to view our interactive plot (https://bl.ocks.org/sunyiyangallan/raw/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1/). It may take sometime to load the plot. 
-
-The D3 [code]((https://bl.ocks.org/sunyiyangallan/13bed51f18a1e4f2e0834f5ef52ee637/69016912fdce8e3749809507d6a58d2e6638fab1)) is also uploaded to blockbuilder.org; which is also on our project's GitHub Repo (https://github.com/tonyytliu/world_conflict_data/tree/master/d3_interactive/code).
+The D3 [code](https://bl.ocks.org/sunyiyangallan/13bed51f18a1e4f2e0834f5ef52ee637) is also uploaded to blockbuilder.org; which is also on our project's GitHub [Repo](https://github.com/tonyytliu/world_conflict_data/tree/master/d3_interactive/code).
 
 The total numbers of deaths every year and every country are calculated using D3. 
 

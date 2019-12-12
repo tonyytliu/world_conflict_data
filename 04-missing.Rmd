@@ -1,7 +1,6 @@
 # Missing values
 
-
-There are 152616 rows in the dataset, and the following outputs are the number of rows missing for the specific variable. We do not need to know the detailed explanations of each variable at the current stage, the descriptions of certain variables are included in the previous chapter 2. For the full explanations of each variable, please refer to the [codebook](https://ucdp.uu.se/downloads/ged/ged191.pdf).
+There are 152616 rows in the dataset, and the following outputs are the number of rows missing for the specific variable. For the full explanations of each variable, please refer to the [codebook](https://ucdp.uu.se/downloads/ged/ged191.pdf).
 
 ```{r}
 load(here("data", "raw", "ged191.RData"))

@@ -31,3 +31,5 @@ To have a more comprehensive view of the peace and conflicts, researchers from t
 First, we would like to look at some general questions regarding world conflict, "what is the most fierce conflict in the past 30 years?" "What is the distribution of fatalities caused by conflicts?" "How many civilians died in those conflicts?". Furthermore, we want to investigate the conflicts through time and geographic perspectives, "is the changing of the time change our answers to the above questions?" "what region has the most fierce conflicts?"
 
 In the following chapters, we will show the information and data, which can give some understandings of the above questions. We hope our analysis in this project will provide you more insights into the broader question of the world's peace and conflicts.
+
+The GitHub repo for our project is [here](https://github.com/tonyytliu/world_conflict_data), or copy the url: https://github.com/tonyytliu/world_conflict_data. Code please refer to the `.Rmd` files.
