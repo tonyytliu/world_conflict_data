@@ -1,3 +1,4 @@
+book_filename: "WorldConflict"
 output_dir: docs
 delete_merged_file: true
 edit: https://github.com/tonyytliu/world_conflict_data/edit/master/%s
