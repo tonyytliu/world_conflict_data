@@ -10,7 +10,7 @@ WorldData <- map_data('world') %>% filter(region != "Antarctica") %>% fortify
 
 
 ## Distribution of the number of deaths based on conflicts
-```{r, fig.width=10}
+```{r, fig.width=10, fig.height=9}
 df_process1<- df_process %>%
               mutate(best_in_1k = best/1000, 
                      name = paste(id, ":", country))
@@ -62,7 +62,8 @@ g4<- ggplot(df_process4, aes(x = best_in_1k)) +
         scale_x_continuous(breaks= pretty_breaks()) +
         ggtitle("Distribution of the conflict-caused deaths",
                 subtitle = "with death >= 10,000") +
-        labs(x="Best estimated deaths, in thousands (x1,000) of deaths")+
+        labs(x="Best estimated deaths, in thousands (x1,000) of deaths",
+             y="Count")+
         theme(plot.title = element_text(size = 16, face='bold',hjust=0.5),
               plot.subtitle = element_text(size = 14, hjust=0.5),
               axis.title = element_text(size = 14),
@@ -74,7 +75,7 @@ ggarrange(g1, g2, g3, g4, ncol = 2, nrow = 2)
 As shown in the top-left plot, the dataset is highly skewed and imbalanced.  When we focus on the data with death less than 100 people, we can see the data are more concentrated in <20 regions. Most conflicts have less than five deaths.
 
 
-```{r, fig.width=8}
+```{r, fig.width=8, fig.height=7}
 options(scipen = 999)
 df_process5<- df_process %>%
               filter(best >= 5000)%>%
@@ -84,8 +85,8 @@ df_process5<- df_process %>%
 ggplot(df_process5, aes(x = best_in_1k, y = reorder(name, best))) +
       geom_point(color = "steelblue") +
       labs(x="Best estimated deaths, in thousands (x1,000) of deaths",
-           y="Confict Event ID: Country") + 
-      ggtitle("Conficts that causing most deaths")+
+           y="Conflict Event ID: Country") + 
+      ggtitle("Conflicts that causing most deaths")+
         theme(plot.title = element_text(size = 16, face='bold',hjust=0.5),
               axis.title = element_text(size = 14),
               axis.text = element_text(size = 12))
@@ -135,7 +136,7 @@ df_sum2 <- df_process %>%
             summarise_at(vars(best), funs(sum)) %>%
               mutate(best_in_1k = best/1000)
 ```
-```{r, fig.width=10, fig.height=3}
+```{r, fig.width=10, fig.height=5}
 g5<- ggplot(df_sum, aes(x = year, y = best_in_1k)) +
         geom_bar(stat = "identity", fill = "steelblue") +
         ggtitle("Deaths caused by conflicts based on year") +
@@ -162,7 +163,7 @@ ggarrange(g5, g6, ncol = 2, nrow = 1)
 
 The conflict-caused deaths are extremely high in 1994, as shown in the left plot. As mentioned in the previous point,  a high number of deaths were probably related to the Rwanda genocide. When we filter out the data related to the Rwanda genocide, we get the plot on the right. The conflict-caused death per year decreased from 1989 until 2005, after 2005, the number tends to increase.
 
-```{r, fig.width=8, fig.height=3}
+```{r, fig.width=8, fig.height=5}
 df_type <- df_process %>%
               group_by(year, type_of_violence) %>%
               tally()
@@ -186,7 +187,7 @@ If you are interested in the detailed and formal definition of these three types
 
 We want to check further how many civilians deaths each year, compare to the deaths of non-civilians caused by conflicts.
 
-```{r, fig.width=10, fig.height=3.8}
+```{r, fig.width=10, fig.height=5}
 library(tidyverse)
 
 df_civ <- df_process %>%
@@ -213,28 +214,32 @@ gc1 <- ggplot(df_civ, aes(fill=section, y=deaths, x=year)) +
         geom_bar(position="stack", stat="identity") + 
         theme(legend.position='bottom') +
         labs(x="year", y="number of deaths, in thousands (x1,000)", fill="civilian death?") + 
-        ggtitle("Deaths caused by conflicts based on year") +
+        ggtitle("Conflict-caused death based on year") +
         scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1)) +
-        scale_fill_viridis_d()+
+        scale_fill_viridis_d(labels = c("civilians", "non civilians"))+
         guides(fill = guide_legend(reverse=TRUE)) +
         theme(plot.title = element_text(size = 16, face='bold',hjust=0.5),
               plot.subtitle = element_text(size = 14, hjust=0.5),
               axis.title = element_text(size = 14),
-              axis.text = element_text(size = 12))
+              axis.text = element_text(size = 12),
+              legend.title = element_text(size=14),
+              legend.text = element_text(size=14))
 
 gc2 <- ggplot(df_civ2, aes(fill=section, y=deaths, x=year)) +
         geom_bar(position="stack", stat="identity") + 
         theme(legend.position='bottom') +
         labs(x="year", y="number of deaths, in thousands (x1,000)", fill="civilian death?") + 
-        ggtitle("Deaths caused by conflicts based on year",
+        ggtitle("Conflict-caused death based on year",
                 subtitle="without the data of the Rwanda genocide") +
         scale_x_continuous(breaks = round(seq(1990,2018, by = 5),1)) +
-        scale_fill_viridis_d()+ 
+        scale_fill_viridis_d(labels = c("civilians", "non civilians"))+
         guides(fill = guide_legend(reverse=TRUE)) +
         theme(plot.title = element_text(size = 16, face='bold',hjust=0.5),
               plot.subtitle = element_text(size = 14, hjust=0.5),
               axis.title = element_text(size = 14),
-              axis.text = element_text(size = 12))
+              axis.text = element_text(size = 12),
+              legend.title = element_text(size=14),
+              legend.text = element_text(size=14))
 
 ggarrange(gc1, gc2, ncol = 2, nrow = 1)
 ```
@@ -262,30 +267,34 @@ gc3 <- ggplot(df_civ3, aes(fill=section, y=deaths, x=year)) +
         geom_bar(position="stack", stat="identity") + 
         theme(legend.position='bottom') +
         labs(x="year", y="propotion of total deaths", fill="civilian death?") + 
-        ggtitle("Deaths caused by conflicts based on year") +
+        ggtitle("Conflict-caused death based on year") +
         coord_flip() +
         scale_x_reverse(breaks = round(seq(1990,2018, by = 5),1)) +
-        scale_fill_viridis_d()+
+        scale_fill_viridis_d(labels = c("civilians", "non civilians"))+
         guides(fill = guide_legend(reverse=TRUE)) +
         theme(plot.title = element_text(size = 16, face='bold',hjust=0.5),
               plot.subtitle = element_text(size = 14, hjust=0.5),
               axis.title = element_text(size = 14),
-              axis.text = element_text(size = 12))
+              axis.text = element_text(size = 12),
+              legend.title = element_text(size=14),
+              legend.text = element_text(size=14))
 
 gc4 <- ggplot(df_civ4, aes(fill=section, y=deaths, x=year)) +
         geom_bar(position="stack", stat="identity") + 
         theme(legend.position='bottom') +
         labs(x="year", y="propotion of total deaths", fill="civilian death?") + 
-        ggtitle("Deaths caused by conflicts based on year",
+        ggtitle("Conflict-caused death on year",
                 subtitle="without the data of the Rwanda genocide") +
         coord_flip() +
         scale_x_reverse(breaks = round(seq(1990,2018, by = 5),1)) +
-        scale_fill_viridis_d()+
+        scale_fill_viridis_d(labels = c("civilians", "non civilians"))+
         guides(fill = guide_legend(reverse=TRUE))  +
         theme(plot.title = element_text(size = 16, face='bold',hjust=0.5),
               plot.subtitle = element_text(size = 14, hjust=0.5),
               axis.title = element_text(size = 14),
-              axis.text = element_text(size = 12))
+              axis.text = element_text(size = 12),
+              legend.title = element_text(size=14),
+              legend.text = element_text(size=14))
 
 ggarrange( gc3, gc4, ncol = 2, nrow = 1)
 ```
@@ -320,7 +329,9 @@ m <- ggplot(p2)+
   theme(plot.title = element_text(size = 16, face='bold',hjust=0.5),
               plot.subtitle = element_text(size = 14, hjust=0.5),
               axis.title = element_text(size = 14),
-              axis.text = element_text(size = 12))
+              axis.text = element_text(size = 12),
+              axis.text.x=element_text(angle=45,hjust=1),
+              axis.text.y=element_text(angle=45,hjust=1))
 m
 ```
 
@@ -330,13 +341,14 @@ Moreover, compared with Asia, Europe and Middle East, Africa and American have m
 
 In addition, in the graph, the total area of Africa and total area of Asia are much larger than those of Americas, Europe and Middle East, which shows that the total numbers of conflicts in Africa and Asia are greater. For Africa, as we discussed before, the terrorist organizations and private military companies are the fundational cause of such large number of conflict. However, in Asia, the reason why the number of conflict is so high remains unclear. We need to create a separate bar chart for country in Asia to see what happened.
 
-```{r,fig.width=10}
+```{r,fig.width=10, fig.height=7}
 as <- p2 %>% filter(region=="Asia")
 as_new <- as %>% group_by(country,type_of_violence) %>% summarise(Freq=n())
 a_3 <- ggplot(as_new, aes(fill=type_of_violence, y=Freq, x=country)) + 
     geom_bar(position="stack", stat="identity")+
     scale_fill_viridis_d()+
-    ggtitle("Stack bar chart for regions in Asia, with different type of violence(1989-2018)")+
+    ggtitle("Stack bar chart for regions in Asia",
+            subtitle="with different type of violence(1989-2018)")+
     xlab("Country in Asia")+
     ylab("Frequency of conflict (thousands of views)")+
     labs(fill="Type of violence")+
@@ -345,7 +357,9 @@ a_3 <- ggplot(as_new, aes(fill=type_of_violence, y=Freq, x=country)) +
           ,legend.position = "bottom",
               plot.subtitle = element_text(size = 14, hjust=0.5),
               axis.title = element_text(size = 14),
-              axis.text = element_text(size = 12))+
+              axis.text = element_text(size = 12),
+          legend.title = element_text(size=12),
+          legend.text = element_text(size=14))+
     coord_flip()+
   guides(fill = guide_legend(reverse=TRUE)) 
 a_3
@@ -368,7 +382,8 @@ ggplot() +
     labs(color="Type of violence", title="Choropleth map for different type of violence in countries around the world(1989-2018)",
          x="", y="") +
     scale_color_viridis_d()+
-    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks.x = element_blank(),axis.ticks.y = element_blank(),plot.title = element_text(face='bold',hjust=0.5,size=20),legend.position = "bottom",legend.text = element_text(size=16))
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks.x = element_blank(),axis.ticks.y = element_blank(),plot.title = element_text(face='bold',hjust=0.5,size=20),legend.position = "bottom",legend.title = element_text(size=18),
+          legend.text = element_text(size=20))
 
 ```
 From the Choropleth map above, we can re-verify our finding before, it is easy to see that the number of yellow color dots which represent the state-based conflict, much more than the number of other two color dots. In other words, the conventional state-based conflict is widely happened around the wolrd compared to other two types of violence. 
@@ -392,7 +407,7 @@ ggplot(ph_2,aes(x=side_b,y=no_rows))+
           plot.title = element_text(size = 16, face='bold',hjust=0.5),
               plot.subtitle = element_text(size = 14, hjust=0.5),
               axis.title = element_text(size = 14),
-              axis.text = element_text(size = 12))
+              axis.text = element_text(size = 12),)
 ```
 From the bar chart above, we can confirm that our finding is true that most of state-based conflicts on the map is the Comummist Rebellion started by CPP in the Philippines.
 
