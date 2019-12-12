@@ -7,5 +7,5 @@
 ## Data Source
 UCDP Georeferenced Event Dataset (GED) Global version 19.1 [[source]](https://ucdp.uu.se/downloads/index.html#ged_global)
 
-## Link to Project Page
+## Link to Our Project Page
 https://tonyytliu.github.io/world_conflict_data/
