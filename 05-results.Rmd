@@ -86,7 +86,7 @@ df_2<- head(df_process[order(-df_process$best),], 10)[c("id", "side_a", "side_b"
 knitr::kable(df_2)
 ```
 
-After an investigation of those conflict events, we found out most of them are between the Government of Rewanda and civilians, which was related to the [Rwanda genocide](https://en.wikipedia.org/wiki/Rwandan_genocide) in 1994.
+After an investigation of those conflict events, we found out most of them are between the Government of Rewanda and civilians, which was related to the [Rwanda genocide](https://en.wikipedia.org/wiki/Rwandan_genocide){target="_blank"} in 1994.
 
 
 ## 2. Relation between conflict and time
@@ -156,9 +156,9 @@ ggplot(df_type, aes(fill=type_of_violence, x=year, y=n)) +
         theme(plot.title = element_text(face='bold',hjust=0.5))
 ```
 
-Most conflict events are state-based conflict, i.e., the conflict involved with "[a] government of a state or any opposition organization or alliance of organizations" [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf), pp.28-29], which is higher in number comparing to the other two types of conflict. Before 2018, there are more one-side conflicts (against civilians) than non-state conflicts (between two armed groups).  But in 2018, there are more non-state conflicts compare to one-side conflict. 
+Most conflict events are state-based conflict, i.e., the conflict involved with "[a] government of a state or any opposition organization or alliance of organizations" [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}, pp.28-29], which is higher in number comparing to the other two types of conflict. Before 2018, there are more one-side conflicts (against civilians) than non-state conflicts (between two armed groups).  But in 2018, there are more non-state conflicts compare to one-side conflict. 
 
-If you are interested in the detailed and formal definition of these three types of conflict, please refer to this [source](https://ucdp.uu.se/downloads/ged/ged191.pdf), pp. 28-31.
+If you are interested in the detailed and formal definition of these three types of conflict, please refer to this [source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}, pp. 28-31.
 
 We want to check further how many civilians deaths each year, compare to the deaths of non-civilians caused by conflicts.
 
@@ -266,7 +266,7 @@ knitr::kable(df_3)
 
 From the above plots, the top-left one, we can see that there are large civilians death in conflicts happened in 1994, which potentially because of the Rwanda genocide; after removing the records regarding the Rwanda genocide, the civilian deaths in 1994 was similar with other years. 
 
-The bottom two plots show the proportion of civilian deaths caused by conflicts, by comparing the left and right plots, we can see that the Rwanda genocide is the reason of leading extreme high proportion of civilian deaths.  In most of the years, the percentage of civilian deaths is around 25%, except in the year 1994 and the year 1996. After further checking, the reason for the high proportion of civilian deaths in 1996 is probably due to the [First Congo War](https://en.wikipedia.org/wiki/First_Congo_War).
+The bottom two plots show the proportion of civilian deaths caused by conflicts, by comparing the left and right plots, we can see that the Rwanda genocide is the reason of leading extreme high proportion of civilian deaths.  In most of the years, the percentage of civilian deaths is around 25%, except in the year 1994 and the year 1996. After further checking, the reason for the high proportion of civilian deaths in 1996 is probably due to the [First Congo War](https://en.wikipedia.org/wiki/First_Congo_War){target="_blank"}.
 
 ## Patterns between geographical location and type of violence
 Fristly, we want to briefly see the pattern between region and type of violence.

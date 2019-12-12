@@ -1,14 +1,14 @@
 # Data sources
 
-UCDP Georeferenced Event Dataset (GED) Global version 19.1 from UCDP Dataset (https://ucdp.uu.se/downloads/index.html#ged_global) is used in our project, this dataset covers "individual events of organized violence (phenomena of lethal violence occurring at a given time and place)" in a world-wide perspective [[source](https://ucdp.uu.se/downloads/index.html#ged_global)].
+UCDP Georeferenced Event Dataset (GED) Global version 19.1 from UCDP Dataset (https://ucdp.uu.se/downloads/index.html#ged_global){target="_blank"} is used in our project, this dataset covers "individual events of organized violence (phenomena of lethal violence occurring at a given time and place)" in a world-wide perspective [[source](https://ucdp.uu.se/downloads/index.html#ged_global){target="_blank"}].
 
-There are 152616 recordes in the dataset, and each record in the dataset is an event of a specific conflict. An event of a conflict is defined as "An incident where armed force was used by an organized actor against another organized actor, or against civilians." [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf)]. 
+There are 152,616 records in the dataset, and each record in the dataset is an event of a specific conflict. An event of a conflict is defined as "An incident where armed force was used by an organized actor against another organized actor, or against civilians." [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}]. 
 
 To avoid potential ambiguities, "conflict event" is used in our project to express the term "event" in the original terminology. This dataset contains data of armed conflict events from a world-wide perspective, from 1989 to 2018; includes the time, geographic location, type, casualties, and other information regarding the conflict event. 
 
-There are a total of 43 variables in the original dataset, and for the full definitions and explanations of variables, please refer to the dataset's codebook [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf)]. However, there are some repeated variables. For example, there are several variables to represent the geo-location of one conflict event, they refer to the same location, but in different formats to suit different geographic databases. In our study, for the location variables, we are only interested in the vanilla `latitude` and `longitude` variables.
+There are a total of 43 variables in the original dataset, and for the full definitions and explanations of variables, please refer to the dataset's codebook [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}]. However, there are some repeated variables. For example, there are several variables to represent the geo-location of one conflict event, they refer to the same location, but in different formats to suit different geographic databases. In our study, for the location variables, we are only interested in the vanilla `latitude` and `longitude` variables.
 
-For the propose of analyzing conflicts' data patterns in this project, we mostly focus on a subset of variables; the following are the variables and their explanations. Explanations are referred from the codebook of the dataset [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf)].
+For the propose of analyzing conflicts' data patterns in this project, we mostly focus on a subset of variables; the following are the variables and their explanations. Explanations are referred from the codebook of the dataset [[source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}].
 
 ```{r echo= FALSE, results= 'asis'}
 library(knitr)
@@ -40,4 +40,4 @@ var_ex = data.frame(
 kable(var_ex)
 ```
 
-One point that needs to be noticed of this dataset is "[the] [d]ata for Syria is not included in the current version" ([source](https://ucdp.uu.se/downloads/ged/ged191.pdf), p. 3). And as mentioned in the dataset's [codebook](https://ucdp.uu.se/downloads/ged/ged191.pdf), "the data collection for Syria is ongoing but the final product is not releasable at this time with the same level of consistency and clarity as other UCDP GED data." Thus, the actual total number of conflict events and deaths in recent years should be larger than the records in the dataset.
+One point that needs to be noticed of this dataset is "[the] [d]ata for Syria is not included in the current version" ([source](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}, p. 3). And as mentioned in the dataset's [codebook](https://ucdp.uu.se/downloads/ged/ged191.pdf){target="_blank"}, "the data collection for Syria is ongoing but the final product is not releasable at this time with the same level of consistency and clarity as other UCDP GED data." Thus, the actual total number of conflict events and deaths in recent years should be larger than the records in the dataset.
