@@ -3,7 +3,7 @@ title: "Analysis on World Armed Conflicts Data"
 author: "Yitao Liu (yl4343), Boyu Liu (bl2788), Yiyang Sun (ys3284)"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-output: github_document
+output: bookdown::gitbook
 documentclass: book
 github-repo: tonyytliu/EDAV_Project
 ---
