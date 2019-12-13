@@ -58,8 +58,8 @@ df_process4<- df_process %>%
               mutate(best_in_1k = best/1000, 
                      name = paste(id, ":", country))
 g4<- ggplot(df_process4, aes(x = best_in_1k)) + 
-        geom_histogram(bins = 20, colour = "#80593D", fill = "steelblue", boundary=10000) +
-        scale_x_continuous(breaks= pretty_breaks()) +
+        geom_histogram(bins = 20, colour = "#80593D", fill = "steelblue", boundary=10) +
+        scale_x_continuous(breaks= pretty_breaks(), limits = c(10,310)) +
         ggtitle("Distribution of the conflict-caused deaths",
                 subtitle = "with death >= 10,000") +
         labs(x="Best estimated deaths, in thousands (x1,000)",
