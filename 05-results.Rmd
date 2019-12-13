@@ -18,7 +18,7 @@ g1 <- ggplot(df_process1, aes(x = best_in_1k)) +
         geom_histogram(aes(y=..count../1000), bins = 20, colour = "#80593D", fill = "steelblue") +
         scale_x_continuous(breaks= pretty_breaks()) +
         ggtitle("Distribution of the conflict-caused deaths") +
-        labs(x="Best estimated deaths, in thousands (x1,000) of deaths",
+        labs(x="Best estimated deaths, in thousands (x1,000)",
              y="Count, in thousands (x1,000)")+
         theme(plot.title = element_text(size = 16, face='bold',hjust=0.5),
               plot.subtitle = element_text(size = 14, hjust=0.5),
@@ -62,7 +62,7 @@ g4<- ggplot(df_process4, aes(x = best_in_1k)) +
         scale_x_continuous(breaks= pretty_breaks()) +
         ggtitle("Distribution of the conflict-caused deaths",
                 subtitle = "with death >= 10,000") +
-        labs(x="Best estimated deaths, in thousands (x1,000) of deaths",
+        labs(x="Best estimated deaths, in thousands (x1,000)",
              y="Count")+
         theme(plot.title = element_text(size = 16, face='bold',hjust=0.5),
               plot.subtitle = element_text(size = 14, hjust=0.5),
